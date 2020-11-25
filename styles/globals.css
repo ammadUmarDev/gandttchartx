@@ -1,29 +1,11 @@
-html,
 body {
   background-image: url("/bg.jpeg");
-  padding: 0;
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
-    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
 }
-
-a {
-  color: inherit;
-  text-decoration: none;
-}
-
-* {
-  box-sizing: border-box;
-}
-
-
 .navIcons:hover {
-  background-color: #2B9ABE;
+  background-color: #3093B4;
   cursor: pointer;
 }
-
 .toolbar {
-  height: 30px;
   max-height: 30px;
   width: 100%;display: flex; flex-direction: row;justify-content: space-between;background-color: black;padding-top: 5px;padding-bottom: 5px;align-items: center;
 }
@@ -31,16 +13,13 @@ a {
   display: flex;flex-direction: row;align-items: center;
 }
  .textArea {
- background-color:#FFDE0D;width: 250px;height: 150px;min-width: 330px; min-height:50px;
- display:flex;
- flex-grow: inherit;
+ background-color:#FFDE0D;width: 250px;height: 150px;min-width: 320px; min-height:50px;
  }
  #draggable i {
  color: #fff;
  margin-left: 5px;
  margin-right: 5px;
- padding: 3px;
- position: relative;
+ padding: 3px
  }
  #draggable i:hover {
  background-color: #494947;
@@ -53,7 +32,6 @@ a {
  .textArea {
  background: #F9E117;
  border: 1px solid rgba(1,1,1,0.4);
- 
  resize: both;
  overflow: auto;
  padding: 10px;
@@ -79,4 +57,3 @@ a {
  [contenteditable='true'] {
  caret-color: black;
  }
-
