@@ -19,6 +19,15 @@ export const addNote = (type,startPos) => {
     }
 }
 
+export const changePositon = (pos) => {
+    return async dispatch => {
+        dispatch({
+            type: "RESET_POSITION",
+            payload: pos
+        })
+    }
+}
+
 export const noteClicked = (id) => {
     return async dispatch => {
         dispatch({

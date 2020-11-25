@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import Draggable from 'react-draggable';
-import {noteClicked,deleteNote} from '../utils/actions'
+import {noteClicked,deleteNote, changePositon} from '../utils/actions'
 const colors = ["black", "white", "yellow","green", "blue", "pink", "red"];
 
 const main = ({details,type}) => {
@@ -24,11 +23,8 @@ const Note = ({details}) => {
 
   const [text,setText] = useState("");
 
-
-  console.log(note.startPos);
-
   return (
-        <div id={`draggable`} className="draggable"  style={{left: note.startPos, zIndex: note.zIndex,display: 'inline-block', padding: 0, marginLeft: 10, position: "absolute"}} onClick={() => {
+        <div id={`draggable`} className="draggable"  style={{left: note.startPos , zIndex: note.zIndex,display: 'inline-block', padding: 0, marginLeft: 10, position: "absolute"}} onClick={() => {
           if(!note.isActive) {
               dispatch(noteClicked(details.id));
           }
