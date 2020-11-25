@@ -47,7 +47,8 @@ const reducer = (state = initialState, action) => {
                 id: create_UUID(),
                 isActive: true,
                 zIndex: 10,
-                type: action.payload
+                type: action.payload.type,
+                startPos: action.payload.startPos
             })
             return {
                 ...state,

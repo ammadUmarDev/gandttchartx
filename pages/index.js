@@ -2,12 +2,12 @@ import Note from '../components/note';
 import { useDispatch, useSelector } from 'react-redux';
 import {addNote} from '../utils/actions';
 import PopPop from 'react-poppop';
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 const notely = () => {
   const dispatch = useDispatch();
   const notes = useSelector(redux => redux.notes);
   const [dialog,setDialog] = useState(false);
-  
+  const currentPosition = useRef(0);
   console.log(notes);
   return (
     <>
@@ -16,7 +16,10 @@ const notely = () => {
         <h3 style={{color: "#fff",marginLeft: 20, textShadow: "1px 1px #fff"}}>GandttchartX</h3>
         <div style={{height: 30, width: 1,backgroundColor: "rgba(255,255,255,0.5)", marginLeft: 20}}/>
 
-        <i onClick={() => dispatch(addNote("note"))} data-toggle="tooltip" data-placement="bottom" title="Add a note" className="fa fa-plus navIcons" aria-hidden="true" style={{marginLeft: 20,color: "#fff", paddingLeft: 10, paddingRight: 10, paddingBottom: 5, paddingTop: 5, fontSize: 25}}></i>
+        <i onClick={() => {
+          dispatch(addNote("note",currentPosition.current));
+          currentPosition.current = currentPosition.current + 330;
+        }} data-toggle="tooltip" data-placement="bottom" title="Add a note" className="fa fa-plus navIcons" aria-hidden="true" style={{marginLeft: 20,color: "#fff", paddingLeft: 10, paddingRight: 10, paddingBottom: 5, paddingTop: 5, fontSize: 25}}></i>
         <i onClick={() => dispatch(addNote("todo"))}  data-toggle="tooltip" data-placement="bottom" title="Add a To-Do List"  className="fa fa-sticky-note navIcons" aria-hidden="true" style={{marginLeft: 20,color: "#fff", paddingLeft: 10, paddingRight: 10, paddingBottom: 5, paddingTop: 5, fontSize: 25}}></i>
         <i onClick={() => setDialog(true)} data-toggle="tooltip" data-placement="bottom" title="Add an image" className="fa fa-picture-o navIcons" aria-hidden="true" style={{marginLeft: 20,color: "#fff", paddingLeft: 10, paddingRight: 10, paddingBottom: 5, paddingTop: 5, fontSize: 25}}></i>
         <i data-toggle="tooltip" data-placement="bottom" title="Change note color" className="fa fa-paint-brush navIcons" aria-hidden="true" style={{marginLeft: 20,color: "#fff", paddingLeft: 10, paddingRight: 10, paddingBottom: 5, paddingTop: 5, fontSize: 25}}></i>
@@ -28,7 +31,9 @@ const notely = () => {
         <i style={{marginLeft: 20, marginRight: 20, fontSize: 25, color: "#fff"}} class="fa fa-cog" aria-hidden="true"></i>
       </div>
     </div>
-    {notes.map((note,index) => <Note type={note.type} key={note.id} details={note}/>)}
+    {notes.map((note,index) => {
+      return <Note type={note.type} key={note.id} details={note}/>
+    })}
     </>
   );
 }
