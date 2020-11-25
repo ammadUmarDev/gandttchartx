@@ -20,14 +20,13 @@ const Note = ({details}) => {
   const [underline,setUnderline] = useState(false);
   const [color, setColor] = useState("black");
   const [showColor, setShowColor] = useState(false);
-  const [font, setFont] = useState(12);
-  const [orderList, setOrderList] = useState(false);
+  const [fonts, setMyFont] = useState(32);
 
   const [text,setText] = useState("");
 
 
   return (
-        <div id={`draggable`} className="draggable"  style={{zIndex: note.zIndex,display: 'inline-block', padding: 0, marginLeft: 10, position: "relative"}} onClick={() => {
+        <div id={`draggable`} className="draggable"  style={{zIndex: note.zIndex,display: 'inline-block', padding: 0, marginLeft: 10, position: "absolute"}} onClick={() => {
           if(!note.isActive) {
               dispatch(noteClicked(details.id));
           }
@@ -40,7 +39,9 @@ const Note = ({details}) => {
     <i className="fa fa-underline" onClick={() => setUnderline(state => !state)} style={{fontWeight: underline ? "bold" : "normal"}} type="button"  aria-hidden="true" />
     <i className="fa fa-list-ol" aria-hidden="true"/>
     <i className="fa fa-list-ul" aria-hidden="true" />
-    <select name="font-manager" id="font-manager" >
+    <select onChange={e => {
+      setMyFont( parseInt(e.target.options[e.target.selectedIndex].value));
+    }} name="font-manager" id="font-manager" >
       <option value="volvo">Font Size</option>
       <option value={12} style={{fontSize: 12}}>12 px</option>
       <option value={24} style={{fontSize: 24}}>24 px</option>
@@ -55,8 +56,8 @@ const Note = ({details}) => {
   {(showColor && note.isActive) && <div style={{position: "absolute", height: 40, width: 330, display: "flex",flexDirection: "row", paddingLeft: 10, paddingRight: 10, justifyContent: "center"}}>
     {colors.map((val,index) => <div onClick={() => setColor(val)} style={{height: 40, width: 40, backgroundColor: val}}/>)}
   </div>}
-<div onClick={() => setShowColor(false)} className="textArea" onInput={e => setText(e.target.innerHTML)} style={{color: color, fontWeight: bold ? "bold" : "normal", fontStyle: italic ? "italic" : "normal",
-                                  textDecoration: underline ? "underline": "normal"}} contentEditable="true">
+<div onClick={() => setShowColor(false)} className="textArea" onInput={e => setText(e.target.innerHTML)} style={{ color: color, fontWeight: bold ? "bold" : "normal", fontStyle: italic ? "italic" : "normal",
+                                  textDecoration: underline ? "underline": "normal", fontSize: fonts}} contentEditable="true">
                                      
 </div>
 </div>
@@ -90,13 +91,13 @@ const TODO = ({details}) => {
     </div> : <div style={{height: 30, opacity: 0}}/>
   }
 <div className="textArea" style={{height: 120, minHeight: 120, display: "inline-block"}} >
-  <center><input onKeyPress={e => {
+  <center>{note.isActive && <input onKeyPress={e => {
     if(e.code == "Enter") {
       list.push(text);
       setList([...list]);
       setText("");
     }
-  }} onChange={e => setText(e.target.value)} value={text} style={{height: 30,width: "90%"}}/>    </center>    
+  }} onChange={e => setText(e.target.value)} value={text} style={{height: 30,width: "90%"}}/> }   </center>    
   {
   list.map((txt,index) => {
     return <><center><div key={index} style={{alignItems: "center",marginTop: 10,display: "flex", flexDirection: "row", width: "90%",justifyContent: "space-between"}}>

@@ -7,6 +7,7 @@ const notely = () => {
   const dispatch = useDispatch();
   const notes = useSelector(redux => redux.notes);
   const [dialog,setDialog] = useState(false);
+  
   console.log(notes);
   return (
     <>
