@@ -99,6 +99,32 @@ const TODO = ({details}) => {
 
   const [list, setList] = useState([]);
 
+  const [left, setLeft] = useState(note.startPos);
+  const [top,setTop] = useState(note.posY);
+  const [dragFlag ,setDragFlag] = useState(false);
+
+  const [diff, setDiff] = useState({x: 0, y: 0});
+
+  const dragStart = (e) => {
+    setDiff({
+      x: e.screenX - e.currentTarget.getBoundingClientRect().left,
+      y: e.screenY - e.currentTarget.getBoundingClientRect().top
+    })
+    setDragFlag(true);
+  }
+
+  const dragging = (e) => {
+    if(dragFlag && note.isActive) {
+      setLeft(e.screenX - diff.x);
+      setTop(e.screenY - diff.y);
+    }
+    
+  }
+
+  const drapEnd = (e) => {
+    setDragFlag(false);
+  }
+
   return (
     <div id={`draggable`} className="draggable"  style={{zIndex: note.zIndex,display: 'inline-block', padding: 0, marginLeft: 10, position: "relative"}} onClick={() => {
       if(!note.isActive) {
@@ -114,7 +140,7 @@ const TODO = ({details}) => {
       }}/>
     </div> : <div style={{height: 30, opacity: 0}}/>
   }
-<div className="textArea" style={{height: 120, minHeight: 120, display: "inline-block"}} >
+<div onMouseDown={dragStart} onMouseMove={dragging} onMouseUp={drapEnd} className="textArea" style={{height: 120, minHeight: 120, display: "inline-block"}} >
   <center>{note.isActive && <input onKeyPress={e => {
     if(e.code == "Enter") {
       list.push(text);
@@ -137,7 +163,7 @@ const TODO = ({details}) => {
   })
 }      
 </div>
-
+<div style={{width: "100%", height: 20, backgroundColor: "#fff66e", resize: "both", overflow: "auto", border: "1px solid rgba(1,1,1,0.4)", borderTop: "0px solid rgba(1,1,1,0)", minWidth: 320}}/>
 </div>
   );
 }
