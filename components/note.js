@@ -26,7 +26,7 @@ const Note = ({details}) => {
 
 
   return (
-        <div id={`draggable`} className="draggable"  style={{zIndex: note.zIndex,display: 'inline-block', padding: 0, marginLeft: 10, position: "absolute"}} onClick={() => {
+        <div id={`draggable`} className="draggable"  style={{zIndex: note.zIndex,display: 'inline-block', padding: 0, marginLeft: 10, position: "relative"}} onClick={() => {
           if(!note.isActive) {
               dispatch(noteClicked(details.id));
           }
