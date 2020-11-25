@@ -7,23 +7,27 @@ export const globalFocused = (focused) => {
     }
 }
 
-export const addNote = (type,startPos) => {
+export const addNote = (type,startPos,posY) => {
     return async dispatch => {
         dispatch({
             type: "ADD_NOTE",
             payload: {
                 type: type,
-                startPos: startPos
+                startPos: startPos,
+                posY: posY
             }
         })
     }
 }
 
-export const changePositon = (pos) => {
+export const changePositon = (pos,posY) => {
     return async dispatch => {
         dispatch({
             type: "RESET_POSITION",
-            payload: pos
+            payload: {
+                pos: pos,
+                posY: posY
+            }
         })
     }
 }

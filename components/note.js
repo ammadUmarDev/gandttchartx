@@ -23,8 +23,12 @@ const Note = ({details}) => {
 
   const [text,setText] = useState("");
 
+  useEffect(() => {
+    $(".draggable").draggable();
+  }, [])
+
   return (
-        <div id={`draggable`} className="draggable"  style={{left: note.startPos , zIndex: note.zIndex,display: 'inline-block', padding: 0, marginLeft: 10, position: "absolute"}} onClick={() => {
+        <div id={`draggable`} className="draggable"  style={{left: note.startPos , top: note.posY,zIndex: note.zIndex,display: 'inline-block', padding: 0, marginLeft: 10, position: "absolute"}} onClick={() => {
           if(!note.isActive) {
               dispatch(noteClicked(details.id));
           }

@@ -3,6 +3,7 @@ import { deleteNote } from "./actions";
 const initialState = {
     notes: [],
     position: 0,
+    positionY: 60,
 }
 
 function create_UUID(){
@@ -18,9 +19,12 @@ function create_UUID(){
 const reducer = (state = initialState, action) => {
     switch(action.type) {
         case "RESET_POSITION":
+            console.log(action.payload);
             return {
                 ...state,
-                position: action.payload,
+                position: action.payload.pos,
+                positionY: action.payload.posY
+
             }
         case "DELETE_NOTE":
             const delNote = [...state.notes];
@@ -54,7 +58,8 @@ const reducer = (state = initialState, action) => {
                 isActive: true,
                 zIndex: 10,
                 type: action.payload.type,
-                startPos: action.payload.startPos
+                startPos: action.payload.startPos,
+                posY: action.payload.posY
             })
             return {
                 ...state,
