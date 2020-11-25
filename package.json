@@ -10,6 +10,13 @@
   "dependencies": {
     "next": "10.0.3",
     "react": "17.0.1",
-    "react-dom": "17.0.1"
+    "react-dom": "17.0.1",
+    "react-draggable": "^4.4.3",
+    "react-images-upload": "^1.2.8",
+    "react-images-uploading": "^3.1.2",
+    "react-poppop": "^1.5.0",
+    "react-redux": "^7.2.2",
+    "redux": "^4.0.5",
+    "redux-thunk": "^2.3.0"
   }
 }
