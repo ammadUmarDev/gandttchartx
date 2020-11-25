@@ -14,6 +14,7 @@ body {
 }
  .textArea {
  background-color:#FFDE0D;width: 250px;height: 150px;min-width: 320px; min-height:50px;
+
  }
  #draggable i {
  color: #fff;
@@ -30,10 +31,13 @@ body {
  margin-right: 5px;
  }
  .textArea {
- background: #F9E117;
+ background: linear-gradient(0deg, rgba(255,246,110,1) 64%, rgba(255,255,255,1) 100%);
+ 
  border: 1px solid rgba(1,1,1,0.4);
- resize: both;
- overflow: auto;
+ border-bottom: 0px solid rgba(1,1,1,0.0);
+ width: 100%;
+ outline: 0px dashed blue;
+
  padding: 10px;
  }
  .bold-text {

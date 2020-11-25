@@ -25,7 +25,7 @@ const Main = ({Component,pageProps}) => {
   const dispatch = useDispatch();
   useEffect(() => {
     document.onclick = (e) => {
-      if(e.path[0].id== "__next") {
+      if(e.path[0].nodeName== "HTML") {
         dispatch(clearFocus())
       }
   }

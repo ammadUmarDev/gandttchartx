@@ -19,16 +19,37 @@ const Note = ({details}) => {
   const [underline,setUnderline] = useState(false);
   const [color, setColor] = useState("black");
   const [showColor, setShowColor] = useState(false);
-  const [fonts, setMyFont] = useState(32);
+  const [fonts, setMyFont] = useState(12);
 
+  const [left, setLeft] = useState(note.startPos);
+  const [top,setTop] = useState(note.posY);
+  const [dragFlag ,setDragFlag] = useState(false);
+
+  const [diff, setDiff] = useState({x: 0, y: 0});
   const [text,setText] = useState("");
 
-  useEffect(() => {
-    $(".draggable").draggable();
-  }, [])
+  const dragStart = (e) => {
+    setDiff({
+      x: e.screenX - e.currentTarget.getBoundingClientRect().left,
+      y: e.screenY - e.currentTarget.getBoundingClientRect().top
+    })
+    setDragFlag(true);
+  }
+
+  const dragging = (e) => {
+    if(dragFlag && note.isActive) {
+      setLeft(e.screenX - diff.x);
+      setTop(e.screenY - diff.y);
+    }
+    
+  }
+
+  const drapEnd = (e) => {
+    setDragFlag(false);
+  }
 
   return (
-        <div id={`draggable`} className="draggable"  style={{left: note.startPos , top: note.posY,zIndex: note.zIndex,display: 'inline-block', padding: 0, marginLeft: 10, position: "absolute"}} onClick={() => {
+        <div  id={`draggable`}   style={{left:  left, top: top,zIndex: note.zIndex,display: 'inline-block', padding: 0, marginLeft: 10, position: "absolute"}} onClick={() => {
           if(!note.isActive) {
               dispatch(noteClicked(details.id));
           }
@@ -58,10 +79,11 @@ const Note = ({details}) => {
   {(showColor && note.isActive) && <div style={{position: "absolute", height: 40, width: 330, display: "flex",flexDirection: "row", paddingLeft: 10, paddingRight: 10, justifyContent: "center"}}>
     {colors.map((val,index) => <div onClick={() => setColor(val)} style={{height: 40, width: 40, backgroundColor: val}}/>)}
   </div>}
-<div onClick={() => setShowColor(false)} className="textArea" onInput={e => setText(e.target.innerHTML)} style={{ color: color, fontWeight: bold ? "bold" : "normal", fontStyle: italic ? "italic" : "normal",
+<div  onMouseDown={dragStart} onMouseMove={dragging} onMouseUp={drapEnd} onClick={() => setShowColor(false)} className="textArea" onInput={e => setText(e.target.innerHTML)} style={{ color: color, fontWeight: bold ? "bold" : "normal", fontStyle: italic ? "italic" : "normal",
                                   textDecoration: underline ? "underline": "normal", fontSize: fonts}} contentEditable="true">
                                      
 </div>
+<div style={{width: "100%", height: 20, backgroundColor: "#fff66e", resize: "both", overflow: "auto", border: "1px solid rgba(1,1,1,0.4)", borderTop: "0px solid rgba(1,1,1,0)", minWidth: 320}}/>
 </div>
   );
 }
