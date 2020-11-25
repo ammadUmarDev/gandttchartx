@@ -7,12 +7,13 @@ export const globalFocused = (focused) => {
     }
 }
 
-export const addNote = (type,startPos,posY) => {
+export const addNote = (type,startPos,posY, url) => {
     return async dispatch => {
         dispatch({
             type: "ADD_NOTE",
             payload: {
                 type: type,
+                url: url,
                 startPos: startPos,
                 posY: posY
             }

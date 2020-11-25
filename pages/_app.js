@@ -4,8 +4,21 @@ import Head from 'next/head'
 import {Provider, useDispatch} from 'react-redux';
 import store from '../utils/store';
 import {clearFocus} from '../utils/actions';
+import firebase from 'firebase'
+
+
 function MyApp({ Component, pageProps }) {
-  
+  if (!firebase.apps.length)
+  firebase.initializeApp({
+    apiKey: "AIzaSyBBBcCH2zzAJmqz44nYcq4bAjLB-lKzFXk",
+    authDomain: "pizza-frankenthal.firebaseapp.com",
+    databaseURL: "https://pizza-frankenthal.firebaseio.com",
+    projectId: "pizza-frankenthal",
+    storageBucket: "pizza-frankenthal.appspot.com",
+    messagingSenderId: "370297156233",
+    appId: "1:370297156233:web:d551ad7a6cc770d9760c58",
+    measurementId: "G-K18JC2ZNJ2"
+  });  
   return <>
   <Head>
     <title>GandttchartX</title>

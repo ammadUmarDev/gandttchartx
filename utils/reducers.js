@@ -59,7 +59,8 @@ const reducer = (state = initialState, action) => {
                 zIndex: 10,
                 type: action.payload.type,
                 startPos: action.payload.startPos,
-                posY: action.payload.posY
+                posY: action.payload.posY,
+                url: action.payload.url
             })
             return {
                 ...state,

@@ -3,15 +3,16 @@ import { useDispatch, useSelector } from 'react-redux';
 import {addNote} from '../utils/actions';
 import { useState } from 'react';
 import {changePositon} from '../utils/actions';
+import firebase from 'firebase';
+import PopPop from 'react-poppop';
 
 const notely = () => {
   const dispatch = useDispatch();
   const notes = useSelector(redux => redux.notes);
   const [dialog,setDialog] = useState(false);
+  const [uploading, setUploading] = useState(false);
   const position = useSelector(redux => redux.position);
   const positionY = useSelector(redux => redux.positionY);
-
-
   return (
     <>
     <div style={{zIndex: 1,marginBottom: 10, boxShadow: "1px 1px rgba(1,1,1,0.5)", width: "100%", backgroundColor: "black", height: 50, display: "flex",justifyContent: "space-between", flexDirection: "row", alignItems: "center"}}>
@@ -24,7 +25,7 @@ const notely = () => {
             dispatch(changePositon(0,positionY + 200))
           }
 
-          dispatch(addNote("note",position,position >= window.innerWidth - 330 ? (positionY + 200) : positionY));
+          dispatch(addNote("note",position,position >= window.innerWidth - 330 ? (positionY + 200) : positionY,""));
 
           dispatch(changePositon(position >= window.innerWidth -660 ? 0 : position + 330,positionY));
 
@@ -43,6 +44,32 @@ const notely = () => {
     {notes.map((note,index) => {
       return <Note type={note.type} key={note.id} details={note}/>
     })}
+     <PopPop position="centerCenter"
+                open={dialog}
+                closeBtn={true}
+                closeOnEsc={true}
+                onClose={() => setDialog(false)}
+                closeOnOverlay={false}>
+
+                  <input type="file" disabled={uploading} onChange={(e) => {
+                    setUploading(true);
+                    firebase.storage().ref("notely").child(new Date().toString()).put(e.target.files[0]).then(res => {
+                      res.ref.getDownloadURL().then(url => {
+                        if(position >= window.innerWidth - 330) {
+                          dispatch(changePositon(0,positionY + 200))
+                        }
+              
+                        dispatch(addNote("image",position,position >= window.innerWidth - 330 ? (positionY + 200) : positionY, url));
+              
+                        dispatch(changePositon(position >= window.innerWidth -660 ? 0 : position + 330,positionY));
+                        setUploading(false);
+                        setDialog(false);
+                      });
+                    });
+                  }}/>
+                  <p>{uploading && "Please wait..."}</p>
+                
+      </PopPop>
     </>
   );
 }
