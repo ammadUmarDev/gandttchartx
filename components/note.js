@@ -211,8 +211,8 @@ const Image = ({details}) => {
       }}/>
     </div> : <div style={{height: 30, opacity: 0}}/>
   }
-<div  className="textArea" style={{background: note.noteColor, height: 120, minHeight: 120, display: "inline-block"}} >
-  <img style={{ display: "block",width: "100%", height: "100%", maxWidth: "100%"}} src={note.url}/>     
+<div  className="textArea" style={{background: note.noteColor, height: 200, minHeight: 120, display: "inline-block"}} >
+  <img style={{ display: "block",width: 400, height: "100%", maxWidth: "100%"}} src={note.url}/>     
 </div>
 
 </div>
