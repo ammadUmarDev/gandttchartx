@@ -22,6 +22,8 @@ const Note = ({details}) => {
   const [color, setColor] = useState("black");
   const [showColor, setShowColor] = useState(false);
   const [fonts, setMyFont] = useState(12);
+  const [cursor, setCursor] = useState("text");
+  const [outline, setOutline] = useState("3px solid rgba(255,255,255,0.0)")
 
   const [left, setLeft] = useState(note.startPos);
   const [top,setTop] = useState(note.posY);
@@ -31,15 +33,27 @@ const Note = ({details}) => {
   const [text,setText] = useState("");
 
   const dragStart = (e) => {
+    if(!note.isActive) {
+      dispatch(noteClicked(details.id));
+  }
+    if((e.clientX >= e.currentTarget.getBoundingClientRect().left + e.target.offsetWidth - 30) && 
+        (e.clientY >= e.currentTarget.getBoundingClientRect().top + e.target.offsetHeight - 30)) {
+          setDragFlag(false);
+        } else {
+          setDragFlag(true);
+          setCursor("crosshair");
+          setOutline("3px solid rgba(255,255,255,0.4)")
+        }
     setDiff({
       x: e.screenX - e.currentTarget.getBoundingClientRect().left,
       y: e.screenY - e.currentTarget.getBoundingClientRect().top
     })
-    setDragFlag(true);
+    
   }
 
   const dragging = (e) => {
-    if(dragFlag && note.isActive) {
+    
+    if(dragFlag) {
       setLeft(e.screenX - diff.x);
       setTop(e.screenY - diff.y);
     }
@@ -48,6 +62,8 @@ const Note = ({details}) => {
 
   const drapEnd = (e) => {
     setDragFlag(false);
+    setCursor("text")
+    setOutline("3px solid rgba(255,255,255,0.0)")
   }
 
   return (
@@ -82,7 +98,7 @@ const Note = ({details}) => {
     {colors.map((val,index) => <div onClick={() => setColor(val)} style={{height: 40, width: 40, backgroundColor: val}}/>)}
   </div>}
 <div   onClick={() => setShowColor(false)} className="textArea" onInput={e => setText(e.target.innerHTML)} style={{background: note.noteColor, color: color, fontWeight: bold ? "bold" : "normal", fontStyle: italic ? "italic" : "normal",
-                                  textDecoration: underline ? "underline": "normal", fontSize: fonts}} contentEditable="true">
+                                  textDecoration: underline ? "underline": "normal", fontSize: fonts, cursor: cursor, outline: outline,}} contentEditable="true">
                                      
 </div>
 </div>
@@ -104,17 +120,30 @@ const TODO = ({details}) => {
   const [top,setTop] = useState(note.posY);
   const [dragFlag ,setDragFlag] = useState(false);
 
+  const [cursor, setCursor] = useState("text");
+  const [outline, setOutline] = useState("3px solid rgba(255,255,255,0.0)")
+
   const [diff, setDiff] = useState({x: 0, y: 0});
 
   const dragStart = (e) => {
+    if(!note.isActive) {
+      dispatch(noteClicked(details.id));
+  }
+    if((e.clientX >= e.currentTarget.getBoundingClientRect().left + e.target.offsetWidth - 30) && 
+        (e.clientY >= e.currentTarget.getBoundingClientRect().top + e.target.offsetHeight - 30)) {
+          setDragFlag(false);
+        } else {
+          setDragFlag(true);
+          setCursor("crosshair");
+          setOutline("3px solid rgba(255,255,255,0.4)")
+        }
       setDiff({
         x: e.screenX - e.currentTarget.getBoundingClientRect().left,
         y: e.screenY - e.currentTarget.getBoundingClientRect().top
       })
-      setDragFlag(true);
   }
   const dragging = (e) => {
-    if(dragFlag && note.isActive) {
+    if(dragFlag) {
       setLeft(e.screenX - diff.x);
       setTop(e.screenY - diff.y);
     }
@@ -123,6 +152,8 @@ const TODO = ({details}) => {
 
   const drapEnd = (e) => {
     setDragFlag(false);
+    setCursor("text")
+    setOutline("3px solid rgba(255,255,255,0.0)")
   }
 
   return (
@@ -140,7 +171,7 @@ const TODO = ({details}) => {
       }}/>
     </div> : <div style={{height: 30, opacity: 0}}/>
   }
-<div  className="textArea" style={{background: note.noteColor, height: 120, minHeight: 120, display: "inline-block"}} >
+<div  className="textArea" style={{cursor: cursor, outline: outline, background: note.noteColor, height: 120, minHeight: 120, display: "inline-block"}} >
   <center>{note.isActive && <input onKeyPress={e => {
     if(e.code == "Enter") {
       list.push(text);
@@ -175,18 +206,32 @@ const Image = ({details}) => {
   const [top,setTop] = useState(note.posY);
   const [dragFlag ,setDragFlag] = useState(false);
 
+
+  const [cursor, setCursor] = useState("text");
+  const [outline, setOutline] = useState("3px solid rgba(255,255,255,0.0)")
+
   const [diff, setDiff] = useState({x: 0, y: 0});
 
   const dragStart = (e) => {
+    if(!note.isActive) {
+      dispatch(noteClicked(details.id));
+  }
+    if((e.clientX >= e.currentTarget.getBoundingClientRect().left + e.target.offsetWidth - 30) && 
+        (e.clientY >= e.currentTarget.getBoundingClientRect().top + e.target.offsetHeight - 30)) {
+          setDragFlag(false);
+        } else {
+          setDragFlag(true);
+          setCursor("crosshair");
+          setOutline("3px solid rgba(255,255,255,0.4)")
+        }
     setDiff({
       x: e.screenX - e.currentTarget.getBoundingClientRect().left,
       y: e.screenY - e.currentTarget.getBoundingClientRect().top
     })
-    setDragFlag(true);
   }
 
   const dragging = (e) => {
-    if(dragFlag && note.isActive) {
+    if(dragFlag) {
       setLeft(e.screenX - diff.x);
       setTop(e.screenY - diff.y);
     }
@@ -195,6 +240,8 @@ const Image = ({details}) => {
 
   const drapEnd = (e) => {
     setDragFlag(false);
+    setCursor("text")
+    setOutline("3px solid rgba(255,255,255,0.0)")
   }
   return (
     <div id={`draggable`} onMouseDown={dragStart} onMouseMove={dragging} onMouseUp={drapEnd} className="draggable imgaer"  style={{top: top, left: left, zIndex: note.zIndex,display: 'inline-block', padding: 0, marginLeft: 10, position: "absolute"}} onClick={() => {
@@ -211,8 +258,8 @@ const Image = ({details}) => {
       }}/>
     </div> : <div style={{height: 30, opacity: 0}}/>
   }
-<div  className="textArea" style={{background: note.noteColor, height: 200, minHeight: 120, display: "inline-block"}} >
-  <img style={{ display: "block",width: 400, height: "100%", maxWidth: "100%"}} src={note.url}/>     
+<div  className="textArea" style={{cursor: cursor, outline: outline,background: note.noteColor, height: 200,minHeight: 120,width: 200,display: "inline-block", border: "0px solid rgba(0,0,0,0.0)"}} >
+  <img style={{width: "100%", height: "100%", objectFit: "fill"}} src={note.url}/>     
 </div>
 
 </div>
