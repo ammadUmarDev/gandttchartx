@@ -31,12 +31,13 @@ body {
  margin-right: 5px;
  }
  .textArea {
- background: linear-gradient(0deg, rgba(255,246,110,1) 64%, rgba(255,255,255,1) 100%);
  
  border: 1px solid rgba(1,1,1,0.4);
  border-bottom: 0px solid rgba(1,1,1,0.0);
  width: 100%;
  outline: 0px dashed blue;
+ resize: both;
+ overflow:auto;
 
  padding: 10px;
  }

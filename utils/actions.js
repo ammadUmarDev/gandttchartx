@@ -1,3 +1,21 @@
+export const auth = (name) => {
+    return async dispatch => {
+        dispatch({
+            type: "AUTH",
+            payload: name
+        })
+    } 
+}
+
+export const changeColor = (color) => {
+    return async dispatch => {
+        dispatch({
+            type: "CHANGE_COLOR",
+            payload: color
+        })
+    }
+}
+
 export const globalFocused = (focused) => {
     return async dispatch => {
         dispatch({

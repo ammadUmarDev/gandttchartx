@@ -51,7 +51,7 @@ const Note = ({details}) => {
   }
 
   return (
-        <div  id={`draggable`}   style={{left:  left, top: top,zIndex: note.zIndex,display: 'inline-block', padding: 0, marginLeft: 10, position: "absolute"}} onClick={() => {
+        <div  id={`draggable`}  onMouseDown={dragStart} onMouseMove={dragging} onMouseUp={drapEnd}  style={{left:  left, top: top,zIndex: note.zIndex,display: 'inline-block', padding: 0, marginLeft: 10, position: "absolute"}} onClick={() => {
           if(!note.isActive) {
               dispatch(noteClicked(details.id));
           }
@@ -81,11 +81,10 @@ const Note = ({details}) => {
   {(showColor && note.isActive) && <div style={{position: "absolute", height: 40, width: 330, display: "flex",flexDirection: "row", paddingLeft: 10, paddingRight: 10, justifyContent: "center"}}>
     {colors.map((val,index) => <div onClick={() => setColor(val)} style={{height: 40, width: 40, backgroundColor: val}}/>)}
   </div>}
-<div  onMouseDown={dragStart} onMouseMove={dragging} onMouseUp={drapEnd} onClick={() => setShowColor(false)} className="textArea" onInput={e => setText(e.target.innerHTML)} style={{ color: color, fontWeight: bold ? "bold" : "normal", fontStyle: italic ? "italic" : "normal",
+<div   onClick={() => setShowColor(false)} className="textArea" onInput={e => setText(e.target.innerHTML)} style={{background: note.noteColor, color: color, fontWeight: bold ? "bold" : "normal", fontStyle: italic ? "italic" : "normal",
                                   textDecoration: underline ? "underline": "normal", fontSize: fonts}} contentEditable="true">
                                      
 </div>
-<div style={{width: "100%", height: 20, backgroundColor: "#fff66e", resize: "both", overflow: "auto", border: "1px solid rgba(1,1,1,0.4)", borderTop: "0px solid rgba(1,1,1,0)", minWidth: 320}}/>
 </div>
   );
 }
@@ -108,13 +107,12 @@ const TODO = ({details}) => {
   const [diff, setDiff] = useState({x: 0, y: 0});
 
   const dragStart = (e) => {
-    setDiff({
-      x: e.screenX - e.currentTarget.getBoundingClientRect().left,
-      y: e.screenY - e.currentTarget.getBoundingClientRect().top
-    })
-    setDragFlag(true);
+      setDiff({
+        x: e.screenX - e.currentTarget.getBoundingClientRect().left,
+        y: e.screenY - e.currentTarget.getBoundingClientRect().top
+      })
+      setDragFlag(true);
   }
-
   const dragging = (e) => {
     if(dragFlag && note.isActive) {
       setLeft(e.screenX - diff.x);
@@ -128,13 +126,13 @@ const TODO = ({details}) => {
   }
 
   return (
-    <div id={`draggable`} className="draggable"  style={{zIndex: note.zIndex,display: 'inline-block', padding: 0, marginLeft: 10, position: "relative"}} onClick={() => {
+    <div id={`draggable`} onMouseDown={dragStart} onMouseMove={dragging} onMouseUp={drapEnd}  className="draggable"  style={{left: left, top: top, zIndex: note.zIndex,display: 'inline-block', padding: 0, marginLeft: 10, position: "absolute"}} onClick={() => {
       if(!note.isActive) {
           dispatch(noteClicked(details.id));
       }
   }}>
 
-  {note.isActive ?  <div  className="toolbar">
+  {note.isActive ?  <div  className="toolbar" >
     <div className="toolbar-left">
       </div>
       <i className="fa fa-times-circle close-btn" aria-hidden="true" onClick={() => {
@@ -142,7 +140,7 @@ const TODO = ({details}) => {
       }}/>
     </div> : <div style={{height: 30, opacity: 0}}/>
   }
-<div onMouseDown={dragStart} onMouseMove={dragging} onMouseUp={drapEnd} className="textArea" style={{height: 120, minHeight: 120, display: "inline-block"}} >
+<div  className="textArea" style={{background: note.noteColor, height: 120, minHeight: 120, display: "inline-block"}} >
   <center>{note.isActive && <input onKeyPress={e => {
     if(e.code == "Enter") {
       list.push(text);
@@ -165,7 +163,6 @@ const TODO = ({details}) => {
   })
 }      
 </div>
-<div style={{width: "100%", height: 20, backgroundColor: "#fff66e", resize: "both", overflow: "auto", border: "1px solid rgba(1,1,1,0.4)", borderTop: "0px solid rgba(1,1,1,0)", minWidth: 320}}/>
 </div>
   );
 }
@@ -199,12 +196,8 @@ const Image = ({details}) => {
   const drapEnd = (e) => {
     setDragFlag(false);
   }
-
-  useEffect(() => {
-    $(".imgaer").draggable();
-  }, [])
   return (
-    <div id={`draggable`} className="draggable imgaer"  style={{zIndex: note.zIndex,display: 'inline-block', padding: 0, marginLeft: 10, position: "relative"}} onClick={() => {
+    <div id={`draggable`} onMouseDown={dragStart} onMouseMove={dragging} onMouseUp={drapEnd} className="draggable imgaer"  style={{top: top, left: left, zIndex: note.zIndex,display: 'inline-block', padding: 0, marginLeft: 10, position: "absolute"}} onClick={() => {
       if(!note.isActive) {
           dispatch(noteClicked(details.id));
       }
@@ -218,10 +211,10 @@ const Image = ({details}) => {
       }}/>
     </div> : <div style={{height: 30, opacity: 0}}/>
   }
-<div  className="textArea" style={{height: 120, minHeight: 120, display: "inline-block"}} >
-  <img style={{width: 320, height: 120}} src={note.url}/>     
+<div  className="textArea" style={{background: note.noteColor, height: 120, minHeight: 120, display: "inline-block"}} >
+  <img style={{ display: "block",width: "100%", height: "100%", maxWidth: "100%"}} src={note.url}/>     
 </div>
-<div style={{width: "100%", height: 20, backgroundColor: "#fff66e", resize: "both", overflow: "auto", border: "1px solid rgba(1,1,1,0.4)", borderTop: "0px solid rgba(1,1,1,0)", minWidth: 320}}/>
+
 </div>
   );
 }

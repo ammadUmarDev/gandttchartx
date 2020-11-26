@@ -1,6 +1,8 @@
 import { deleteNote } from "./actions";
 
 const initialState = {
+    auth: null,
+    color: "linear-gradient(0deg, rgba(255,246,110,1) 64%, rgba(255,250,173,1) 100%)",
     notes: [],
     position: 0,
     positionY: 60,
@@ -18,6 +20,22 @@ function create_UUID(){
 
 const reducer = (state = initialState, action) => {
     switch(action.type) {
+        case "CHANGE_COLOR":
+            for(let i=0; i<state.notes.length; i++) {
+                if(state.notes[i].isActive) {
+                    state.notes[i].noteColor = action.payload;
+                    break;
+                }
+            }
+            return {
+                ...state,
+                color: action.payload
+            }
+        case "AUTH":
+            return {
+                ...state,
+                auth: action.payload
+            }
         case "RESET_POSITION":
             console.log(action.payload);
             return {
@@ -60,7 +78,8 @@ const reducer = (state = initialState, action) => {
                 type: action.payload.type,
                 startPos: action.payload.startPos,
                 posY: action.payload.posY,
-                url: action.payload.url
+                url: action.payload.url,
+                noteColor: state.color
             })
             return {
                 ...state,
