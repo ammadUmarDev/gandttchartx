@@ -113,7 +113,7 @@ const notely = () => {
       firebase.auth().signOut();
       dispatch(auth(null))
     }} style={{color: "#fff", marginRight: 20}}>{credentials &&  "Logout"}</p>
-    <p style={{color: "#fff", marginRight: 20}}>Wall Options</p>
+    <p onClick={e => setBackground(true)} style={{color: "#fff", marginRight: 20}}>Wall Options</p>
     </div>}
     {notes.map((note,index) => {
       return <Note type={note.type} key={note.id} details={note}/>
@@ -155,9 +155,17 @@ const notely = () => {
                 open={background}
                 closeBtn={true}
                 closeOnEsc={true}
-                onClose={() => setDialog(false)}
+                onClose={() => setBackground(false)}
                 closeOnOverlay={false}>
-                  <img style={{width: 80, height: 80}} src="https://images-na.ssl-images-amazon.com/images/I/81CnmpCGe5L._AC_SL1000_.jpg"/>
+                  <div style={{display: "flex", flexDirection: "row"}}>
+                  <img style={{width: 200, height: 200, marginLeft: 20}} src="https://images-na.ssl-images-amazon.com/images/I/81CnmpCGe5L._AC_SL1000_.jpg"/>
+                  
+                  <img style={{width: 200, height: 200, marginLeft: 20}} src="https://images-na.ssl-images-amazon.com/images/I/81CnmpCGe5L._AC_SL1000_.jpg"/>
+                  
+                  <img style={{width: 200, height: 200, marginLeft: 20}} src="https://images-na.ssl-images-amazon.com/images/I/81CnmpCGe5L._AC_SL1000_.jpg"/>
+                 
+                  </div>
+                  
       </PopPop>
     </>
   );
