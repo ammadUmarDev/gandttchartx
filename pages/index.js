@@ -35,6 +35,7 @@ const notely = () => {
   const [uploading, setUploading] = useState(false);
   const position = useSelector(redux => redux.position);
   const positionY = useSelector(redux => redux.positionY);
+  const [background, setBackground] = useState(false);
 
   useEffect(() => {
     dispatch(saveDetails())
@@ -151,7 +152,7 @@ const notely = () => {
       {signupModal && <Signup setSignupModal={() => setSignupModal(false)} />}
 
       <PopPop position="centerCenter"
-                open={dialog}
+                open={background}
                 closeBtn={true}
                 closeOnEsc={true}
                 onClose={() => setDialog(false)}
