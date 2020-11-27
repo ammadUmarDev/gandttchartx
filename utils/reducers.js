@@ -1,4 +1,6 @@
 import { deleteNote } from "./actions";
+import {tempFun} from '../components/note';
+import firebase from 'firebase';
 
 const initialState = {
     auth: null,
@@ -20,6 +22,30 @@ function create_UUID(){
 
 const reducer = (state = initialState, action) => {
     switch(action.type) {
+        case "LOAD_DETAILS":
+            return {
+                ...state,
+                notes: action.payload
+            }
+        case "EXTRA_DETAILS":
+            for(let i=0; i < state.notes.length; i++) {
+                if(state.notes[i].id == action.payload.id) {
+                    state.notes[i] = {
+                        ...action.payload
+                    }
+                    break;
+                }
+            }
+            return {
+                ...state,
+            }
+        case "SAVE_DETAILS":
+            if(state.auth) {
+                firebase.database().ref("users").child(state.auth.uid).child("notes").set(state.notes)
+            }
+            return {
+                ...state,
+            }
         case "CHANGE_COLOR":
             for(let i=0; i<state.notes.length; i++) {
                 if(state.notes[i].isActive) {

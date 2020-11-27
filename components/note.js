@@ -1,7 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import {noteClicked,deleteNote, changePositon} from '../utils/actions'
+import {noteClicked,deleteNote, changePositon, extraDetails} from '../utils/actions'
 const colors = ["black", "white", "yellow","green", "blue", "pink", "red"];
+
+
+export let tempFun;
 
 const main = ({details,type}) => {
   if(type == "note") {
@@ -15,13 +18,13 @@ const main = ({details,type}) => {
 
 const Note = ({details}) => {
   const dispatch = useDispatch();
-  const note = useSelector(redux => redux.notes.find((note) => note.id == details.id));
-  const [bold,setBold] = useState(false);
-  const [italic, setItalic] = useState(false);
-  const [underline,setUnderline] = useState(false);
-  const [color, setColor] = useState("black");
+  let note = useSelector(redux => redux.notes.find((note) => note.id == details.id));
+  const [bold,setBold] = useState(note.bold ? note.bold : false);
+  const [italic, setItalic] = useState(note.italic ? note.italic : false);
+  const [underline,setUnderline] = useState(note.underline ? note.underline : false);
+  const [color, setColor] = useState(note.color ? note.color : "black");
   const [showColor, setShowColor] = useState(false);
-  const [fonts, setMyFont] = useState(12);
+  const [fonts, setMyFont] = useState(note.fonts ? note.fonts : 12);
   const [cursor, setCursor] = useState("text");
   const [outline, setOutline] = useState("3px solid rgba(255,255,255,0.0)")
 
@@ -30,7 +33,19 @@ const Note = ({details}) => {
   const [dragFlag ,setDragFlag] = useState(false);
 
   const [diff, setDiff] = useState({x: 0, y: 0});
-  const [text,setText] = useState("");
+  const [text,setText] = useState(note.text? note.text : "");
+
+  useEffect(() => {
+    dispatch(extraDetails({
+      ...note,
+      bold: bold,
+      italic: italic,
+      underline: underline,
+      color: color,
+      fonts: fonts,
+      text: text,
+    }))
+  }, [bold,italic,underline,color,fonts])
 
   const dragStart = (e) => {
     if(!note.isActive) {
@@ -97,9 +112,9 @@ const Note = ({details}) => {
   {(showColor && note.isActive) && <div style={{position: "absolute", height: 40, width: 330, display: "flex",flexDirection: "row", paddingLeft: 10, paddingRight: 10, justifyContent: "center"}}>
     {colors.map((val,index) => <div onClick={() => setColor(val)} style={{height: 40, width: 40, backgroundColor: val}}/>)}
   </div>}
-<div   onClick={() => setShowColor(false)} className="textArea" onInput={e => setText(e.target.innerHTML)} style={{background: note.noteColor, color: color, fontWeight: bold ? "bold" : "normal", fontStyle: italic ? "italic" : "normal",
+<div   onClick={() => setShowColor(false)} className="textArea"  onInput={e => setText(e.target.innerHTML)} style={{background: note.noteColor, color: color, fontWeight: bold ? "bold" : "normal", fontStyle: italic ? "italic" : "normal",
                                   textDecoration: underline ? "underline": "normal", fontSize: fonts, cursor: cursor, outline: outline,}} contentEditable="true">
-                                     
+                                     {text}
 </div>
 </div>
   );
@@ -111,10 +126,11 @@ const Note = ({details}) => {
 
 const TODO = ({details}) => {
   const dispatch = useDispatch();
-  const note = useSelector(redux => redux.notes.find((note) => note.id == details.id));
-  const [text,setText] = useState("");
+  let note = useSelector(redux => redux.notes.find((note) => note.id == details.id));
+  console.log(note);
+  const [text,setText] = useState(note.text ? note.text : "");
 
-  const [list, setList] = useState([]);
+  const [list, setList] = useState(note.list ? note.list : []);
 
   const [left, setLeft] = useState(note.startPos);
   const [top,setTop] = useState(note.posY);
@@ -124,6 +140,14 @@ const TODO = ({details}) => {
   const [outline, setOutline] = useState("3px solid rgba(255,255,255,0.0)")
 
   const [diff, setDiff] = useState({x: 0, y: 0});
+
+   useEffect(() => {
+     dispatch(extraDetails({
+      ...note,
+      text: text,
+      list: list,
+    }));
+   }, [text,list]);
 
   const dragStart = (e) => {
     if(!note.isActive) {
@@ -200,7 +224,7 @@ const TODO = ({details}) => {
 
 const Image = ({details}) => {
   const dispatch = useDispatch();
-  const note = useSelector(redux => redux.notes.find((note) => note.id == details.id));
+  let note = useSelector(redux => redux.notes.find((note) => note.id == details.id));
 
   const [left, setLeft] = useState(note.startPos);
   const [top,setTop] = useState(note.posY);

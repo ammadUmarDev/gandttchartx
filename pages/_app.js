@@ -10,14 +10,14 @@ import firebase from 'firebase'
 function MyApp({ Component, pageProps }) {
   if (!firebase.apps.length)
   firebase.initializeApp({
-    apiKey: "AIzaSyBBBcCH2zzAJmqz44nYcq4bAjLB-lKzFXk",
-    authDomain: "pizza-frankenthal.firebaseapp.com",
-    databaseURL: "https://pizza-frankenthal.firebaseio.com",
-    projectId: "pizza-frankenthal",
-    storageBucket: "pizza-frankenthal.appspot.com",
-    messagingSenderId: "370297156233",
-    appId: "1:370297156233:web:d551ad7a6cc770d9760c58",
-    measurementId: "G-K18JC2ZNJ2"
+    apiKey: "AIzaSyAw0WO7rOrZP4hu3MVrrEiTJzRzFnVZdA4",
+    authDomain: "notely-539a9.firebaseapp.com",
+    databaseURL: "https://notely-539a9.firebaseio.com",
+    projectId: "notely-539a9",
+    storageBucket: "notely-539a9.appspot.com",
+    messagingSenderId: "568856423594",
+    appId: "1:568856423594:web:eb044180858007eff6f4d3",
+    measurementId: "G-D2CHSH279P"
   });  
   return <>
   <Head>
@@ -37,6 +37,7 @@ function MyApp({ Component, pageProps }) {
 const Main = ({Component,pageProps}) => {
   const dispatch = useDispatch();
   useEffect(() => {
+    console.log(firebase.auth().currentUser);
     document.onclick = (e) => {
       if(e.path[0].nodeName== "HTML") {
         dispatch(clearFocus())

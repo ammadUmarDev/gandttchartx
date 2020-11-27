@@ -1,11 +1,12 @@
 import Note from '../components/note';
 import { useDispatch, useSelector } from 'react-redux';
-import {addNote, changeColor} from '../utils/actions';
-import { useState } from 'react';
+import {addNote, changeColor, saveDetails} from '../utils/actions';
+import { useState,useEffect } from 'react';
 import {changePositon} from '../utils/actions';
 import firebase from 'firebase';
 import PopPop from 'react-poppop';
-import GoogleLogin from 'react-google-login';
+import Login from '../components/login';
+import Signup from '../components/signup';
 import {auth} from '../utils/actions';
 const linears = ["linear-gradient(0deg, rgba(255,246,110,1) 64%, rgba(255,250,173,1) 100%)", "linear-gradient(0deg, rgba(139,208,74,1) 64%, rgba(170,223,119,1) 100%)", 
 "linear-gradient(0deg, rgba(86,194,231,1) 64%, rgba(152,219,242,1) 100%)", "linear-gradient(0deg, rgba(171,105,234,1) 64%, rgba(204,157,249,1) 100%)"
@@ -26,13 +27,31 @@ const notely = () => {
   const dispatch = useDispatch();
   const notes = useSelector(redux => redux.notes);
   const credentials = useSelector(redux => redux.auth);
+  const [settings, setSettings] = useState(false);
+  const [signupModal, setSignupModal] = useState(false);
+  const [loginModal, setLoginModal] = useState(false);
   const [showColor, setShowColor] = useState(false);
   const [dialog,setDialog] = useState(false);
   const [uploading, setUploading] = useState(false);
-  const [logDialog, setLogDialog] = useState(false);
   const position = useSelector(redux => redux.position);
   const positionY = useSelector(redux => redux.positionY);
-  console.log(auth)
+
+  useEffect(() => {
+    dispatch(saveDetails())
+  } ,[notes])
+
+  useEffect(() => {
+    const timersync = () => {
+      setTimeout(() => {
+        dispatch(saveDetails());
+        if(credentials != null) {
+          timersync();
+        }
+      }, 10000)
+    }
+
+    timersync();
+  } ,[])
   return (
     <>
      
@@ -68,21 +87,30 @@ const notely = () => {
       {credentials == null ? 
       <div style={{display: "flex", flexDirection: "row"}}>
 
-        <a onClick={() => setLogDialog(true)} style={{color: "#fff",fontWeight: "normal"}}>Login</a>
-        <a onClick={() => setLogDialog(true)} style={{color: "#fff",marginLeft: 20, fontWeight: "normal"}}>Signup</a>
-        <i style={{marginLeft: 20, marginRight: 20, fontSize: 25, color: "#fff"}} class="fa fa-cog" aria-hidden="true"></i>
+        <a onClick={() => setLoginModal(true)} style={{color: "#fff",fontWeight: "normal"}}>Login</a>
+        <a onClick={() => setSignupModal(true)} style={{color: "#fff",marginLeft: 20, fontWeight: "normal"}}>Signup</a>
+        <i onClick={e => setSettings(state => !state)} style={{marginLeft: 20, marginRight: 20, fontSize: 25, color: "#fff"}} class="fa fa-cog" aria-hidden="true"></i>
       </div>
       :
       <div style={{display: "flex", flexDirection: "row", alignItems: "center"}}>
-        <a style={{color: "#fff",fontWeight: "normal",marginRight: 20}}>{credentials}</a>
-        <a onClick={() => {
-          dispatch(auth(null));
-        }}  style={{color: "#fff",fontWeight: "normal"}}>Logout</a>
-        <i style={{marginLeft: 20, marginRight: 20, fontSize: 25, color: "#fff"}} class="fa fa-cog" aria-hidden="true"></i>
+        <a style={{color: "#fff",fontWeight: "normal",marginRight: 20}}>{credentials.name}</a>
+        <i onClick={e => setSettings(state => !state)} style={{marginLeft: 20, marginRight: 20, fontSize: 25, color: "#fff"}} class="fa fa-cog" aria-hidden="true"></i>
       </div>
 }
     </div>
+
+   
+
     {showColor && <DropDown />}
+    {settings && <div style={{backgroundColor: "black",display: "flex", flexDirection: "row", width: "100%", justifyContent: "flex-end"}}>
+    
+    <p style={{color: "#fff", marginRight: 20}}>Account Options: </p>
+    <p onClick={() => {
+      firebase.auth().signOut();
+      dispatch(auth(null))
+    }} style={{color: "#fff", marginRight: 20}}>{credentials &&  "Logout"}</p>
+    <p style={{color: "#fff", marginRight: 20}}>Wall Options</p>
+    </div>}
     {notes.map((note,index) => {
       return <Note type={note.type} key={note.id} details={note}/>
     })}
@@ -113,27 +141,12 @@ const notely = () => {
                 
       </PopPop>
 
-      <PopPop position="centerCenter"
-                open={logDialog}
-                closeBtn={true}
-                contentStyle={{overflow: "hidden"}}
-                closeOnEsc={true}
-                onClose={() => setLogDialog(false)}
-                closeOnOverlay={false}>
-                   <GoogleLogin
-                    clientId="574784519360-2jkme7semar6tbks15gjck2g41689f7p.apps.googleusercontent.com"
-                    buttonText="Google"
-                    onSuccess={(res) => {
-                      dispatch(auth(res.profileObj.name));
-                      setLogDialog(false)
-                    }}
-                    onFailure={(err) => {
-                      console.log(err);
-                    }}
-                    cookiePolicy={'single_host_origin'}
-  />
 
-      </PopPop>
+      {loginModal && <Login setLoginModal={() => setLoginModal(false)} />}
+
+
+      {signupModal && <Signup setSignupModal={() => setSignupModal(false)} />}
+     
     </>
   );
 }

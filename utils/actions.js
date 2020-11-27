@@ -1,10 +1,53 @@
-export const auth = (name) => {
+import firebase from 'firebase';
+
+export const auth = (user) => {
     return async dispatch => {
         dispatch({
             type: "AUTH",
-            payload: name
+            payload: user
         })
     } 
+}
+
+export const loadDetails = (uid) => {
+    return async dispatch => {
+        firebase.database().ref("users").child(uid).child("notes").once("value", res => {
+            const myNotes = res.toJSON();
+            const notes = [];
+            for(let key in myNotes) {
+                
+                if(myNotes[key].list) {
+                    const list = [];
+                    for(let lk in myNotes[key].list) {
+                        list.push(myNotes[key].list[lk]);
+                    }
+                    myNotes[key].list = list;
+                }
+                notes.push(myNotes[key]);
+            }
+            dispatch({
+                type: "LOAD_DETAILS",
+                payload: notes
+            })
+        })
+    }
+}
+
+export const extraDetails = (obj) => {
+    return async dispatch => {
+        dispatch({
+            type: "EXTRA_DETAILS",
+            payload: obj
+        })
+    }
+}
+
+export const saveDetails = () => {
+    return async dispatch => {
+        dispatch({
+            type: "SAVE_DETAILS"
+        })
+    }
 }
 
 export const changeColor = (color) => {
