@@ -53,7 +53,7 @@ const signup = ({setSignupModal}) => {
                       <p style={{maxWidth: 200}}>You can also signup using you google account</p>
 
                       <GoogleLogin
-                        clientId="574784519360-2jkme7semar6tbks15gjck2g41689f7p.apps.googleusercontent.com"
+                        clientId="267359506129-77cuv40e395c8sre6bllc0p4hd9nb0mi.apps.googleusercontent.com"
                         buttonText="Signup Google"
                         onSuccess={(res) => {
                             setName(res.profileObj.name);

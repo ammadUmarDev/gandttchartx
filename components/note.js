@@ -60,19 +60,17 @@ const Note = ({details}) => {
           setOutline("3px solid rgba(255,255,255,0.4)")
         }
     setDiff({
-      x: e.screenX - e.currentTarget.getBoundingClientRect().left,
-      y: e.screenY - e.currentTarget.getBoundingClientRect().top
+      x: e.pageX - e.currentTarget.offsetLeft,
+      y: e.pageY - e.currentTarget.offsetTop,
     })
     
   }
 
   const dragging = (e) => {
-    
     if(dragFlag) {
-      setLeft(e.screenX - diff.x);
-      setTop(e.screenY - diff.y);
+      setLeft(e.pageX - diff.x);
+      setTop(e.pageY - diff.y);
     }
-    
   }
 
   const drapEnd = (e) => {
@@ -112,9 +110,9 @@ const Note = ({details}) => {
   {(showColor && note.isActive) && <div style={{position: "absolute", height: 40, width: 330, display: "flex",flexDirection: "row", paddingLeft: 10, paddingRight: 10, justifyContent: "center"}}>
     {colors.map((val,index) => <div onClick={() => setColor(val)} style={{height: 40, width: 40, backgroundColor: val}}/>)}
   </div>}
-<div   onClick={() => setShowColor(false)} className="textArea"  onInput={e => setText(e.target.innerHTML)} style={{background: note.noteColor, color: color, fontWeight: bold ? "bold" : "normal", fontStyle: italic ? "italic" : "normal",
+<div   onClick={() => setShowColor(false)} className="textArea" id={`${note.id}`}  onInput={e => setText(e.target.innerHTML)} style={{background: note.noteColor, color: color, fontWeight: bold ? "bold" : "normal", fontStyle: italic ? "italic" : "normal",
                                   textDecoration: underline ? "underline": "normal", fontSize: fonts, cursor: cursor, outline: outline,}} contentEditable="true">
-                                     {text}
+                                    <p>{text}</p>
 </div>
 </div>
   );
@@ -283,7 +281,7 @@ const Image = ({details}) => {
     </div> : <div style={{height: 30, opacity: 0}}/>
   }
 <div  className="textArea" style={{cursor: cursor, outline: outline,background: note.noteColor, height: 200,minHeight: 120,width: 200,display: "inline-block", border: "0px solid rgba(0,0,0,0.0)"}} >
-  <img style={{width: "100%", height: "100%", objectFit: "fill"}} src={note.url}/>     
+  <img   style={{width: "100%", height: "100%", objectFit: "fill", pointerEvents: "none"}} src={note.url}/>     
 </div>
 
 </div>

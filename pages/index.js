@@ -47,7 +47,7 @@ const notely = () => {
         if(credentials != null) {
           timersync();
         }
-      }, 10000)
+      }, 3000)
     }
 
     timersync();
