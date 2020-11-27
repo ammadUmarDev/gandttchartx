@@ -83,14 +83,8 @@ const signup = ({setSignupModal}) => {
 
                        <div class="form-group">
                       <label for="exampleInputEmail1">Password</label>
-                      <input value={password} onChange={e => setPassword(e.target.value)} type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Min 6 characters" />
+                      <input value={password} onChange={e => setPassword(e.target.value)} type="password" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Min 6 characters" />
                        </div>
-
-                       <div class="form-group">
-                      <label for="exampleInputEmail1">Confirm Password</label>
-                      <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Min 6 characters" />
-                       </div>
-
                        <button onClick={handleSignup} className="btn btn-success">{loading ? "Please Wait..." : "Create a new account"}</button>
                     </div>
                   </div>
