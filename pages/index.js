@@ -158,11 +158,17 @@ const notely = () => {
                 onClose={() => setBackground(false)}
                 closeOnOverlay={false}>
                   <div style={{display: "flex", flexDirection: "row"}}>
-                  <img style={{width: 200, height: 200, marginLeft: 20}} src="https://images-na.ssl-images-amazon.com/images/I/81CnmpCGe5L._AC_SL1000_.jpg"/>
+                  <img onClick={() => {
+                    document.body.style.backgroundImage = "url(https://images-na.ssl-images-amazon.com/images/I/81CnmpCGe5L._AC_SL1000_.jpg)"
+                  }} style={{width: 200, height: 200, marginLeft: 20}} src="https://images-na.ssl-images-amazon.com/images/I/81CnmpCGe5L._AC_SL1000_.jpg"/>
                   
-                  <img style={{width: 200, height: 200, marginLeft: 20}} src="https://images-na.ssl-images-amazon.com/images/I/81CnmpCGe5L._AC_SL1000_.jpg"/>
+                  <img onClick={() => {
+                    document.body.style.backgroundImage = "url(https://i.pinimg.com/originals/62/65/4b/62654bc9be4f20b50928cecb1b2209a8.jpg)"
+                  }} style={{width: 200, height: 200, marginLeft: 20}} src="https://i.pinimg.com/originals/62/65/4b/62654bc9be4f20b50928cecb1b2209a8.jpg"/>
                   
-                  <img style={{width: 200, height: 200, marginLeft: 20}} src="https://images-na.ssl-images-amazon.com/images/I/81CnmpCGe5L._AC_SL1000_.jpg"/>
+                  <img noClick={() => {
+                    document.body.style.backgroundImage = "url(https://envato-shoebox-0.imgix.net/bea6/cda1-03ab-40c5-8ce5-9bd9609d6554/IMG_6244.jpg?auto=compress%2Cformat&fit=max&mark=https%3A%2F%2Felements-assets.envato.com%2Fstatic%2Fwatermark2.png&markalign=center%2Cmiddle&markalpha=18&w=1600&s=f5a4dc742ef890ffcedcccf6c5f28241)"
+                  }} style={{width: 200, height: 200, marginLeft: 20}} src="https://envato-shoebox-0.imgix.net/bea6/cda1-03ab-40c5-8ce5-9bd9609d6554/IMG_6244.jpg?auto=compress%2Cformat&fit=max&mark=https%3A%2F%2Felements-assets.envato.com%2Fstatic%2Fwatermark2.png&markalign=center%2Cmiddle&markalpha=18&w=1600&s=f5a4dc742ef890ffcedcccf6c5f28241"/>
                  
                   </div>
                   
