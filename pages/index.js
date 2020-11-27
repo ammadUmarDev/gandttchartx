@@ -47,7 +47,7 @@ const notely = () => {
         if(credentials != null) {
           timersync();
         }
-      }, 3000)
+      }, 10000)
     }
 
     timersync();
@@ -93,6 +93,9 @@ const notely = () => {
       </div>
       :
       <div style={{display: "flex", flexDirection: "row", alignItems: "center"}}>
+        <button onClick={() => {
+           dispatch(saveDetails());
+        }} className="btn btn-primary">Save</button>
         <a style={{color: "#fff",fontWeight: "normal",marginRight: 20}}>{credentials.name}</a>
         <i onClick={e => setSettings(state => !state)} style={{marginLeft: 20, marginRight: 20, fontSize: 25, color: "#fff"}} class="fa fa-cog" aria-hidden="true"></i>
       </div>
@@ -146,7 +149,15 @@ const notely = () => {
 
 
       {signupModal && <Signup setSignupModal={() => setSignupModal(false)} />}
-     
+
+      <PopPop position="centerCenter"
+                open={dialog}
+                closeBtn={true}
+                closeOnEsc={true}
+                onClose={() => setDialog(false)}
+                closeOnOverlay={false}>
+                  <img style={{width: 80, height: 80}} src="https://images-na.ssl-images-amazon.com/images/I/81CnmpCGe5L._AC_SL1000_.jpg"/>
+      </PopPop>
     </>
   );
 }
