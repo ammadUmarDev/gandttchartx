@@ -8,6 +8,7 @@ const login = ({setLoginModal}) => {
     const dispatch = useDispatch();
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const [forgot, setForgot] = useState(false);
     const [loading, setLoading] = useState(false);
 
     const loginHandler = () => {
@@ -77,6 +78,18 @@ const login = ({setLoginModal}) => {
 
 
                <button onClick={loginHandler} className="btn btn-primary">{loading ? "Please Wait..." : "Login"}</button>
+<br /><br />
+               <a onClick={e => setForgot(state => !state)} style={{marginTop: 10,textDecoration: "underline"}}>Forgot your Password?</a>
+
+               <br />
+               {forgot && <div>
+               <div class="form-group">
+              <label for="exampleInputEmail1"></label>
+              <input value={email} onChange={e => setEmail(e.target.value)} type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="yourid@example.com" />
+               </div>
+
+               <button className="btn btn-info">Get Password</button>
+               </div>}
             </div>
           </div>
 </PopPop>

@@ -8,9 +8,9 @@ import PopPop from 'react-poppop';
 import Login from '../components/login';
 import Signup from '../components/signup';
 import {auth} from '../utils/actions';
-const linears = ["linear-gradient(0deg, rgba(255,246,110,1) 64%, rgba(255,250,173,1) 100%)", "linear-gradient(0deg, rgba(139,208,74,1) 64%, rgba(170,223,119,1) 100%)", 
-"linear-gradient(0deg, rgba(86,194,231,1) 64%, rgba(152,219,242,1) 100%)", "linear-gradient(0deg, rgba(171,105,234,1) 64%, rgba(204,157,249,1) 100%)"
-,"linear-gradient(0deg, rgba(229,95,220,1) 64%, rgba(245,150,240,1) 100%)", "linear-gradient(0deg, rgba(211,74,66,1) 64%, rgba(239,115,108,1) 100%)"]
+const linears = ["linear-gradient(160deg, rgba(255,246,110,1) 60%, rgba(255,250,173,1) 100%)", "linear-gradient(160deg, rgba(139,208,74,1) 64%, rgba(170,223,119,1) 100%)", 
+"linear-gradient(160deg, rgba(86,194,231,1) 64%, rgba(152,219,242,1) 100%)", "linear-gradient(160deg, rgba(171,105,234,1) 64%, rgba(204,157,249,1) 100%)"
+,"linear-gradient(160deg, rgba(229,95,220,1) 64%, rgba(245,150,240,1) 100%)", "linear-gradient(160deg, rgba(211,74,66,1) 64%, rgba(239,115,108,1) 100%)"]
 const DropDown = () => {
   const dispatch = useDispatch();
   return (
@@ -158,6 +158,11 @@ const notely = () => {
                 onClose={() => setBackground(false)}
                 closeOnOverlay={false}>
                   <div style={{display: "flex", flexDirection: "row"}}>
+
+                  <img onClick={() => {
+                    document.body.style.backgroundImage = "url(https://firebasestorage.googleapis.com/v0/b/notely-539a9.appspot.com/o/notely%2Fbg.jpeg?alt=media&token=0044ec0c-6d9a-4a90-8d04-0948c3b7d477)"
+                  }} style={{width: 200, height: 200, marginLeft: 20}} src="https://firebasestorage.googleapis.com/v0/b/notely-539a9.appspot.com/o/notely%2Fbg.jpeg?alt=media&token=0044ec0c-6d9a-4a90-8d04-0948c3b7d477"/>
+                  
                   <img onClick={() => {
                     document.body.style.backgroundImage = "url(https://images-na.ssl-images-amazon.com/images/I/81CnmpCGe5L._AC_SL1000_.jpg)"
                   }} style={{width: 200, height: 200, marginLeft: 20}} src="https://images-na.ssl-images-amazon.com/images/I/81CnmpCGe5L._AC_SL1000_.jpg"/>
@@ -166,10 +171,6 @@ const notely = () => {
                     document.body.style.backgroundImage = "url(https://i.pinimg.com/originals/62/65/4b/62654bc9be4f20b50928cecb1b2209a8.jpg)"
                   }} style={{width: 200, height: 200, marginLeft: 20}} src="https://i.pinimg.com/originals/62/65/4b/62654bc9be4f20b50928cecb1b2209a8.jpg"/>
                   
-                  <img noClick={() => {
-                    document.body.style.backgroundImage = "url(https://envato-shoebox-0.imgix.net/bea6/cda1-03ab-40c5-8ce5-9bd9609d6554/IMG_6244.jpg?auto=compress%2Cformat&fit=max&mark=https%3A%2F%2Felements-assets.envato.com%2Fstatic%2Fwatermark2.png&markalign=center%2Cmiddle&markalpha=18&w=1600&s=f5a4dc742ef890ffcedcccf6c5f28241)"
-                  }} style={{width: 200, height: 200, marginLeft: 20}} src="https://envato-shoebox-0.imgix.net/bea6/cda1-03ab-40c5-8ce5-9bd9609d6554/IMG_6244.jpg?auto=compress%2Cformat&fit=max&mark=https%3A%2F%2Felements-assets.envato.com%2Fstatic%2Fwatermark2.png&markalign=center%2Cmiddle&markalpha=18&w=1600&s=f5a4dc742ef890ffcedcccf6c5f28241"/>
-                 
                   </div>
                   
       </PopPop>

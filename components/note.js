@@ -28,6 +28,9 @@ const Note = ({details}) => {
   const [cursor, setCursor] = useState("text");
   const [outline, setOutline] = useState("3px solid rgba(255,255,255,0.0)")
 
+  const [ordered, setOrdered] = useState(false);
+  const [unordered, setUnordered] = useState(false);
+
   const [left, setLeft] = useState(note.startPos);
   const [top,setTop] = useState(note.posY);
   const [dragFlag ,setDragFlag] = useState(false);
@@ -91,15 +94,18 @@ const Note = ({details}) => {
     <i className="fa fa-bold" onClick={() => setBold(state => !state)} style={{fontWeight: bold ? "bold" : "normal"}} type="button" aria-hidden="true" />
     <i className="fa fa-italic" onClick={() => setItalic(state => !state)} style={{fontWeight: italic ? "bold" : "normal"}} type="button" aria-hidden="true" />
     <i className="fa fa-underline" onClick={() => setUnderline(state => !state)} style={{fontWeight: underline ? "bold" : "normal"}} type="button"  aria-hidden="true" />
-    <i className="fa fa-list-ol" aria-hidden="true"/>
-    <i className="fa fa-list-ul" aria-hidden="true" />
+    <i onClick={e => setOrdered(true)} className="fa fa-list-ol" aria-hidden="true"/>
+    <i onClick={e => setUnordered(true)} className="fa fa-list-ul" aria-hidden="true" />
     <select onChange={e => {
       setMyFont( parseInt(e.target.options[e.target.selectedIndex].value));
     }} name="font-manager" id="font-manager" >
       <option value="volvo">Font Size</option>
-      <option value={12} style={{fontSize: 12}}>12 px</option>
-      <option value={24} style={{fontSize: 24}}>24 px</option>
-      <option value={42} style={{fontSize: 42}}>42 px</option>
+      <option value={8} style={{fontSize: 8}}>1 (8pt)</option>
+      <option value={10} style={{fontSize: 10}}>2 (10pt)</option>
+      <option value={12} style={{fontSize: 12}}>3 (12pt)</option>
+      <option value={14} style={{fontSize: 14}}>4 (14pt)</option>
+      <option value={18} style={{fontSize: 18}}>5 (18pt)</option>
+      <option value={24} style={{fontSize: 24}}>6 (24pt)</option>
     </select>
     <i onClick={() => setShowColor(state => !state)} className="fa fa-paint-brush" aria-hidden="true" />
   </div>
@@ -110,9 +116,17 @@ const Note = ({details}) => {
   {(showColor && note.isActive) && <div style={{position: "absolute", height: 40, width: 330, display: "flex",flexDirection: "row", paddingLeft: 10, paddingRight: 10, justifyContent: "center"}}>
     {colors.map((val,index) => <div onClick={() => setColor(val)} style={{height: 40, width: 40, backgroundColor: val}}/>)}
   </div>}
-<div   onClick={() => setShowColor(false)} className="textArea" id={`${note.id}`}  onInput={e => setText(e.target.innerHTML)} style={{background: note.noteColor, color: color, fontWeight: bold ? "bold" : "normal", fontStyle: italic ? "italic" : "normal",
+<div   onClick={() => setShowColor(false)} className="textArea" id={`${note.id}`}  onInput={e => {
+
+  if(!ordered && !unordered) {
+    setText(e.target.innerHTML)
+  }
+  
+
+}} style={{background: note.noteColor, color: color, fontWeight: bold ? "bold" : "normal", fontStyle: italic ? "italic" : "normal",
                                   textDecoration: underline ? "underline": "normal", fontSize: fonts, cursor: cursor, outline: outline,}} contentEditable="true">
-                                    <p>{text}</p>
+                                  {ordered && <ol><li>{text}</li></ol>}
+                                  {unordered && <ul><li>{text}</li></ul>}
 </div>
 </div>
   );
