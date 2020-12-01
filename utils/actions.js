@@ -9,6 +9,14 @@ export const auth = (user) => {
     } 
 }
 
+export const clear = () => {
+    return async dispatch => {
+        dispatch({
+            type: "CLEAR"
+        })
+    }
+}
+
 export const loadDetails = (uid) => {
     return async dispatch => {
         firebase.database().ref("users").child(uid).child("notes").once("value", res => {

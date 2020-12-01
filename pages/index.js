@@ -1,6 +1,6 @@
 import Note from '../components/note';
 import { useDispatch, useSelector } from 'react-redux';
-import {addNote, changeColor, saveDetails} from '../utils/actions';
+import {addNote, changeColor, clear, saveDetails} from '../utils/actions';
 import { useState,useEffect } from 'react';
 import {changePositon} from '../utils/actions';
 import firebase from 'firebase';
@@ -8,9 +8,10 @@ import PopPop from 'react-poppop';
 import Login from '../components/login';
 import Signup from '../components/signup';
 import {auth} from '../utils/actions';
-const linears = ["linear-gradient(160deg, rgba(255,246,110,1) 60%, rgba(255,250,173,1) 100%)", "linear-gradient(160deg, rgba(139,208,74,1) 64%, rgba(170,223,119,1) 100%)", 
+const linears = ["linear-gradient(0deg, rgb(245, 229, 27) 64%, rgb(255, 250, 173) 100%)", "linear-gradient(160deg, rgba(139,208,74,1) 64%, rgba(170,223,119,1) 100%)", 
 "linear-gradient(160deg, rgba(86,194,231,1) 64%, rgba(152,219,242,1) 100%)", "linear-gradient(160deg, rgba(171,105,234,1) 64%, rgba(204,157,249,1) 100%)"
 ,"linear-gradient(160deg, rgba(229,95,220,1) 64%, rgba(245,150,240,1) 100%)", "linear-gradient(160deg, rgba(211,74,66,1) 64%, rgba(239,115,108,1) 100%)"]
+//
 const DropDown = () => {
   const dispatch = useDispatch();
   return (
@@ -40,19 +41,6 @@ const notely = () => {
   useEffect(() => {
     dispatch(saveDetails())
   } ,[notes])
-
-  useEffect(() => {
-    const timersync = () => {
-      setTimeout(() => {
-        dispatch(saveDetails());
-        if(credentials != null) {
-          timersync();
-        }
-      }, 10000)
-    }
-
-    timersync();
-  } ,[])
   return (
     <>
      
@@ -96,7 +84,7 @@ const notely = () => {
       <div style={{display: "flex", flexDirection: "row", alignItems: "center"}}>
         <button onClick={() => {
            dispatch(saveDetails());
-        }} className="btn btn-primary">Save</button>
+        }} className="btn btn-primary" style={{marginRight: 20}}>Save</button>
         <a style={{color: "#fff",fontWeight: "normal",marginRight: 20}}>{credentials.name}</a>
         <i onClick={e => setSettings(state => !state)} style={{marginLeft: 20, marginRight: 20, fontSize: 25, color: "#fff"}} class="fa fa-cog" aria-hidden="true"></i>
       </div>
@@ -112,6 +100,7 @@ const notely = () => {
     <p onClick={() => {
       firebase.auth().signOut();
       dispatch(auth(null))
+      dispatch(clear());
     }} style={{color: "#fff", marginRight: 20}}>{credentials &&  "Logout"}</p>
     <p onClick={e => setBackground(true)} style={{color: "#fff", marginRight: 20}}>Wall Options</p>
     </div>}

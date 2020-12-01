@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import {noteClicked,deleteNote, changePositon, extraDetails} from '../utils/actions'
 const colors = ["black", "white", "yellow","green", "blue", "pink", "red"];
@@ -24,10 +24,10 @@ const Note = ({details}) => {
   const [underline,setUnderline] = useState(note.underline ? note.underline : false);
   const [color, setColor] = useState(note.color ? note.color : "black");
   const [showColor, setShowColor] = useState(false);
-  const [fonts, setMyFont] = useState(note.fonts ? note.fonts : 12);
+  const [fonts, setMyFont] = useState(note.fonts ? note.fonts : 15);
   const [cursor, setCursor] = useState("text");
   const [outline, setOutline] = useState("3px solid rgba(255,255,255,0.0)")
-
+  const obj = useRef(null);
   const [ordered, setOrdered] = useState(false);
   const [unordered, setUnordered] = useState(false);
 
@@ -46,9 +46,16 @@ const Note = ({details}) => {
       underline: underline,
       color: color,
       fonts: fonts,
-      text: text,
+      text: obj.current ? obj.current.target.innerHTML : "",
     }))
-  }, [bold,italic,underline,color,fonts])
+  });
+
+  useEffect(() => {
+
+  })
+  useEffect(() => { 
+    document.getElementById(`${note.id}`).innerHTML = note.text ? note.text : "";
+  }, [])
 
   const dragStart = (e) => {
     if(!note.isActive) {
@@ -96,10 +103,10 @@ const Note = ({details}) => {
     <i className="fa fa-underline" onClick={() => setUnderline(state => !state)} style={{fontWeight: underline ? "bold" : "normal"}} type="button"  aria-hidden="true" />
     <i onClick={e => setOrdered(true)} className="fa fa-list-ol" aria-hidden="true"/>
     <i onClick={e => setUnordered(true)} className="fa fa-list-ul" aria-hidden="true" />
-    <select onChange={e => {
+    <select style={{width: 60, fontSize: 12}} onChange={e => {
       setMyFont( parseInt(e.target.options[e.target.selectedIndex].value));
     }} name="font-manager" id="font-manager" >
-      <option value="volvo">Font Size</option>
+      <option value="volvo" style={{fontSize: 10}}>Font Size</option>
       <option value={8} style={{fontSize: 8}}>1 (8pt)</option>
       <option value={10} style={{fontSize: 10}}>2 (10pt)</option>
       <option value={12} style={{fontSize: 12}}>3 (12pt)</option>
@@ -114,17 +121,17 @@ const Note = ({details}) => {
   }}/>
   </div> : <div style={{height: 30, opacity: 0}}/>}
   {(showColor && note.isActive) && <div style={{position: "absolute", height: 40, width: 330, display: "flex",flexDirection: "row", paddingLeft: 10, paddingRight: 10, justifyContent: "center"}}>
-    {colors.map((val,index) => <div onClick={() => setColor(val)} style={{height: 40, width: 40, backgroundColor: val}}/>)}
+    {colors.map((val,index) => <div onClick={() => setColor(val)} style={{height: 40, width: 40, backgroundColor: val, border: color == val ? "3px solid black"  : "0px solid black"}}/>)}
   </div>}
 <div   onClick={() => setShowColor(false)} className="textArea" id={`${note.id}`}  onInput={e => {
-
+  obj.current = e;
   if(!ordered && !unordered) {
     setText(e.target.innerHTML)
   }
   
 
-}} style={{background: note.noteColor, color: color, fontWeight: bold ? "bold" : "normal", fontStyle: italic ? "italic" : "normal",
-                                  textDecoration: underline ? "underline": "normal", fontSize: fonts, cursor: cursor, outline: outline,}} contentEditable="true">
+}} style={{backgroundImage: note.noteColor, color: color, fontWeight: bold ? "bold" : "normal", fontStyle: italic ? "italic" : "normal",
+                                  textDecoration: underline ? "underline": "normal", fontSize: fonts, cursor: cursor, outline: outline,}} id={`${note.id}`} contentEditable="true">
                                   {ordered && <ol><li>{text}</li></ol>}
                                   {unordered && <ul><li>{text}</li></ul>}
 </div>

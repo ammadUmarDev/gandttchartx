@@ -22,6 +22,14 @@ function create_UUID(){
 
 const reducer = (state = initialState, action) => {
     switch(action.type) {
+        case "CLEAR":
+            return {
+                auth: null,
+                color: "linear-gradient(0deg, rgba(255,246,110,1) 64%, rgba(255,250,173,1) 100%)",
+                notes: [],
+                position: 0,
+                positionY: 60,
+            }
         case "LOAD_DETAILS":
             return {
                 ...state,
