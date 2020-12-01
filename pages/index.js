@@ -97,7 +97,8 @@ const notely = () => {
     {settings && <div style={{backgroundColor: "black",display: "flex", flexDirection: "row", width: "100%", justifyContent: "flex-end"}}>
     
     <p style={{color: "#fff", marginRight: 20}}>Account Options: </p>
-    <p onClick={() => {
+    <p onClick={async () => {
+      await dispatch(saveDetails())
       firebase.auth().signOut();
       dispatch(auth(null))
       dispatch(clear());

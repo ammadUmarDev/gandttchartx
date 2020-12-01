@@ -47,6 +47,8 @@ const Note = ({details}) => {
       color: color,
       fonts: fonts,
       text: obj.current ? obj.current.target.innerHTML : "",
+      startPos: diff.x,
+      posY: diff.y
     }))
   });
 
