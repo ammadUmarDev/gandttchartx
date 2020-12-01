@@ -50,23 +50,23 @@ const notely = () => {
         <div style={{height: 30, width: 1,backgroundColor: "rgba(255,255,255,0.5)", marginLeft: 20}}/>
 
         <i onClick={() => {
-          if(position >= window.innerWidth - 320) {
-            dispatch(changePositon(0,positionY + 160))
+          if(position >= window.innerWidth - 280) {
+            dispatch(changePositon(0,positionY + 140))
           }
 
           dispatch(addNote("note",position,positionY,""));
 
-          dispatch(changePositon(position >= window.innerWidth -660 ? 0 : position + 325,position >= window.innerWidth -660 ? positionY + 160 : positionY));
+          dispatch(changePositon(position >= window.innerWidth -500 ? 0 : position + 280,position >= window.innerWidth -500 ? positionY + 140 : positionY));
 
         }} data-toggle="tooltip" data-placement="bottom" title="Add a note" className="fa fa-plus navIcons" aria-hidden="true" style={{marginLeft: 20,color: "#fff", paddingLeft: 10, paddingRight: 10, paddingBottom: 5, paddingTop: 5, fontSize: 25}}></i>
         <i onClick={() => {
-          if(position >= window.innerWidth - 320) {
+          if(position >= window.innerWidth - 280) {
             dispatch(changePositon(0,positionY + 160))
           }
 
           dispatch(addNote("todo",position,positionY,""));
 
-          dispatch(changePositon(position >= window.innerWidth -660 ? 0 : position + 325,position >= window.innerWidth -660 ? positionY + 160 : positionY));
+          dispatch(changePositon(position >= window.innerWidth -500 ? 0 : position + 280,position >= window.innerWidth -500 ? positionY + 160 : positionY));
 
         }}  data-toggle="tooltip" data-placement="bottom" title="Add a To-Do List"  className="fa fa-sticky-note navIcons" aria-hidden="true" style={{marginLeft: 20,color: "#fff", paddingLeft: 10, paddingRight: 10, paddingBottom: 5, paddingTop: 5, fontSize: 25}}></i>
         <i onClick={() => setDialog(true)} data-toggle="tooltip" data-placement="bottom" title="Add an image" className="fa fa-picture-o navIcons" aria-hidden="true" style={{marginLeft: 20,color: "#fff", paddingLeft: 10, paddingRight: 10, paddingBottom: 5, paddingTop: 5, fontSize: 25}}></i>
