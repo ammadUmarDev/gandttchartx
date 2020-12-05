@@ -34,9 +34,12 @@ const Note = ({details}) => {
   const [left, setLeft] = useState(note.startPos);
   const [top,setTop] = useState(note.posY);
   const [dragFlag ,setDragFlag] = useState(false);
-
-  const [diff, setDiff] = useState({x: 0, y: 0});
+  const [dim, setDim] = useState({x: note.startPos, y: note.posY})
+  const [diff, setDiff] = useState({x: note.startPos, y: note.posY});
   const [text,setText] = useState(note.text? note.text : "");
+
+  const [width, setWidth] = useState(note.width ? note.width : 250);
+  const [height, setHeight] = useState(note.height ? note.height : 100);
 
   useEffect(() => {
     dispatch(extraDetails({
@@ -47,17 +50,24 @@ const Note = ({details}) => {
       color: color,
       fonts: fonts,
       text: obj.current ? obj.current.target.innerHTML : "",
-      startPos: diff.x,
-      posY: diff.y
     }))
-  });
+  }, [bold,italic,underline,color,fonts,text]);
 
   useEffect(() => {
+    dispatch(extraDetails({
+      ...note,
+      startPos: dim.x,
+      posY: dim.y
+    }))
+    console.log("Updated")
+  }, [dim]);
 
-  })
   useEffect(() => { 
     document.getElementById(`${note.id}`).innerHTML = note.text ? note.text : "";
-  }, [])
+    $(`#${note.id}`).resize(function(e) {
+      alert("Resized");
+    });
+  }, []);
 
   const dragStart = (e) => {
     if(!note.isActive) {
@@ -74,6 +84,11 @@ const Note = ({details}) => {
     setDiff({
       x: e.pageX - e.currentTarget.offsetLeft,
       y: e.pageY - e.currentTarget.offsetTop,
+    });
+
+    setDim({
+      x: e.pageX,
+      y: e.pageY
     })
     
   }
@@ -125,7 +140,7 @@ const Note = ({details}) => {
   {(showColor && note.isActive) && <div style={{position: "absolute", height: 40, width: 330, display: "flex",flexDirection: "row", paddingLeft: 10, paddingRight: 10, justifyContent: "center"}}>
     {colors.map((val,index) => <div onClick={() => setColor(val)} style={{height: 40, width: 40, backgroundColor: val, border: color == val ? "3px solid black"  : "0px solid black"}}/>)}
   </div>}
-<div   onClick={() => setShowColor(false)} className="textArea" id={`${note.id}`}  onInput={e => {
+<div   onClick={() => setShowColor(false)}  style={{width: width, height: height}} className="textArea" id={`${note.id}`}  onInput={e => {
   obj.current = e;
   if(!ordered && !unordered) {
     setText(e.target.innerHTML)
@@ -161,6 +176,10 @@ const TODO = ({details}) => {
   const [outline, setOutline] = useState("3px solid rgba(255,255,255,0.0)")
 
   const [diff, setDiff] = useState({x: 0, y: 0});
+  const [dim, setDim] = useState({x: note.startPos, y: note.posY})
+
+  const [width, setWidth] = useState(note.width ? note.width : 250);
+  const [height, setHeight] = useState(note.height ? note.height : 100);
 
    useEffect(() => {
      dispatch(extraDetails({
@@ -169,6 +188,14 @@ const TODO = ({details}) => {
       list: list,
     }));
    }, [text,list]);
+
+   useEffect(() => {
+    dispatch(extraDetails({
+     ...note,
+     startPos: dim.x,
+     posY: dim.y
+   }));
+  }, [dim]);
 
   const dragStart = (e) => {
     if(!note.isActive) {
@@ -186,6 +213,13 @@ const TODO = ({details}) => {
         x: e.screenX - e.currentTarget.getBoundingClientRect().left,
         y: e.screenY - e.currentTarget.getBoundingClientRect().top
       })
+
+      setDim({
+        x: e.pageX,
+        y: e.pageY
+      })
+
+
   }
   const dragging = (e) => {
     if(dragFlag) {
@@ -256,6 +290,15 @@ const Image = ({details}) => {
   const [outline, setOutline] = useState("3px solid rgba(255,255,255,0.0)")
 
   const [diff, setDiff] = useState({x: 0, y: 0});
+  const [dim, setDim] = useState({x: note.startPos, y: note.posY})
+
+  useEffect(() => {
+    dispatch(extraDetails({
+     ...note,
+     startPos: dim.x,
+     posY: dim.y
+   }));
+  }, [dim]);
 
   const dragStart = (e) => {
     if(!note.isActive) {
@@ -272,6 +315,12 @@ const Image = ({details}) => {
     setDiff({
       x: e.screenX - e.currentTarget.getBoundingClientRect().left,
       y: e.screenY - e.currentTarget.getBoundingClientRect().top
+    })
+
+    setDim({
+      x: e.screenX,
+      y: e.screenY
+
     })
   }
 
