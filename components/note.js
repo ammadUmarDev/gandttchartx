@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import {noteClicked,deleteNote, changePositon, extraDetails} from '../utils/actions'
+import Draggable from 'react-draggable';
 const colors = ["black", "white", "yellow","green", "blue", "pink", "red"];
 
 
@@ -107,7 +108,7 @@ const Note = ({details}) => {
   }
 
   return (
-        <div  id={`draggable`}  onMouseDown={dragStart} onMouseMove={dragging} onMouseUp={drapEnd}  style={{left:  left, top: top,zIndex: note.zIndex,display: 'inline-block', padding: 0, marginLeft: 10, position: "absolute"}} onClick={() => {
+    <Draggable handle=".handle"><div  id={`draggable`}  onMouseDown={dragStart} onMouseMove={dragging} onMouseUp={drapEnd}  style={{left:  left, top: top,zIndex: note.zIndex,display: 'inline-block', padding: 0, marginLeft: 10, position: "absolute"}} onClick={() => {
           if(!note.isActive) {
               dispatch(noteClicked(details.id));
           }
@@ -140,7 +141,7 @@ const Note = ({details}) => {
   {(showColor && note.isActive) && <div style={{position: "absolute", height: 40, width: 330, display: "flex",flexDirection: "row", paddingLeft: 10, paddingRight: 10, justifyContent: "center"}}>
     {colors.map((val,index) => <div onClick={() => setColor(val)} style={{height: 40, width: 40, backgroundColor: val, border: color == val ? "3px solid black"  : "0px solid black"}}/>)}
   </div>}
-<div   onClick={() => setShowColor(false)}  style={{width: width, height: height}} className="textArea" id={`${note.id}`}  onInput={e => {
+<div   onClick={() => setShowColor(false)}  style={{width: width, height: height}} className={`textArea ${note.isActive ? "nothing" : "handle"}`}  id={`${note.id}`}  onInput={e => {
   obj.current = e;
   if(!ordered && !unordered) {
     setText(e.target.innerHTML)
@@ -153,6 +154,7 @@ const Note = ({details}) => {
                                   {unordered && <ul><li>{text}</li></ul>}
 </div>
 </div>
+</Draggable>
   );
 }
 
@@ -236,7 +238,7 @@ const TODO = ({details}) => {
   }
 
   return (
-    <div id={`draggable`} onMouseDown={dragStart} onMouseMove={dragging} onMouseUp={drapEnd}  className="draggable"  style={{left: left, top: top, zIndex: note.zIndex,display: 'inline-block', padding: 0, marginLeft: 10, position: "absolute"}} onClick={() => {
+    <Draggable handle=".handle"><div id={`draggable`} onMouseDown={dragStart} onMouseMove={dragging} onMouseUp={drapEnd}  className="draggable"  style={{left: left, top: top, zIndex: note.zIndex,display: 'inline-block', padding: 0, marginLeft: 10, position: "absolute"}} onClick={() => {
       if(!note.isActive) {
           dispatch(noteClicked(details.id));
       }
@@ -250,7 +252,7 @@ const TODO = ({details}) => {
       }}/>
     </div> : <div style={{height: 30, opacity: 0}}/>
   }
-<div  className="textArea" style={{cursor: cursor, outline: outline, background: note.noteColor, height: 120, minHeight: 120, display: "inline-block"}} >
+<div  className={`textArea ${note.isActive ? "nothing" : "handle"}`} style={{cursor: cursor, outline: outline, background: note.noteColor, height: 120, minHeight: 120, display: "inline-block"}} >
   <center>{note.isActive && <input onKeyPress={e => {
     if(e.code == "Enter") {
       list.push(text);
@@ -273,7 +275,7 @@ const TODO = ({details}) => {
   })
 }      
 </div>
-</div>
+</div></Draggable>
   );
 }
 
@@ -338,13 +340,13 @@ const Image = ({details}) => {
     setOutline("3px solid rgba(255,255,255,0.0)")
   }
   return (
-    <div id={`draggable`} onMouseDown={dragStart} onMouseMove={dragging} onMouseUp={drapEnd} className="draggable imgaer"  style={{top: top, left: left, zIndex: note.zIndex,display: 'inline-block', padding: 0, marginLeft: 10, position: "absolute"}} onClick={() => {
+    <Draggable handle=".handle"><div id={`draggable`} onMouseDown={dragStart} onMouseMove={dragging} onMouseUp={drapEnd} className="draggable imgaer"  style={{top: top, left: left, zIndex: note.zIndex,display: 'inline-block', padding: 0, marginLeft: 10, position: "absolute"}} onClick={() => {
       if(!note.isActive) {
           dispatch(noteClicked(details.id));
       }
   }}>
 
-  {note.isActive ?  <div  className="toolbar">
+  {note.isActive ?  <div  className="toolbar handle">
     <div className="toolbar-left">
       </div>
       <i className="fa fa-times-circle close-btn" aria-hidden="true" onClick={() => {
@@ -352,11 +354,11 @@ const Image = ({details}) => {
       }}/>
     </div> : <div style={{height: 30, opacity: 0}}/>
   }
-<div  className="textArea" style={{cursor: cursor, outline: outline,background: note.noteColor, height: 200,minHeight: 120,width: 200,display: "inline-block", border: "0px solid rgba(0,0,0,0.0)"}} >
+<div  className={`textArea ${note.isActive ? "nothing" : "handle"}`} style={{cursor: cursor, outline: outline,background: note.noteColor, height: 200,minHeight: 120,width: 200,display: "inline-block", border: "0px solid rgba(0,0,0,0.0)"}} >
   <img   style={{width: "100%", height: "100%", objectFit: "fill", pointerEvents: "none"}} src={note.url}/>     
 </div>
 
-</div>
+</div></Draggable>
   );
 }
 
