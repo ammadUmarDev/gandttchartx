@@ -46,7 +46,7 @@ const notely = () => {
      
     <div style={{zIndex: 1, boxShadow: "1px 1px rgba(1,1,1,0.5)", width: "100%", backgroundColor: "black", height: 50, display: "flex",justifyContent: "space-between", flexDirection: "row", alignItems: "center"}}>
       <div style={{display: "flex", flexDirection: "row",alignItems: "center"}}>
-        <h3 style={{color: "#fff",marginLeft: 20, textShadow: "1px 1px #fff"}}>GandttchartX</h3>
+        <h3 style={{color: "#fff",marginLeft: 20, textShadow: "1px 1px #fff"}}>Toolbee</h3>
         <div style={{height: 30, width: 1,backgroundColor: "rgba(255,255,255,0.5)", marginLeft: 20}}/>
 
         <i onClick={() => {

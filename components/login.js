@@ -63,7 +63,7 @@ const login = ({setLoginModal}) => {
             </div>
             <div style={{height: 400, width: 1, backgroundColor: "rgba(1,1,1,0.5)",marginLeft:100, marginRight: 10}}/>
             <div style={{marginLeft: 50}}>
-              <h4>Use your GandttchartX account</h4>
+              <h4>Use your Toolbee account</h4>
               <p>Please enter the following details</p>
 
                <div class="form-group">
