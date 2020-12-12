@@ -50,7 +50,7 @@ const reducer = (state = initialState, action) => {
         case "SAVE_DETAILS":
             if(state.auth) {
                 firebase.database().ref("users").child(state.auth.uid).child("notes").set(state.notes).then(res => {
-                    console.log(res);
+                    console.log("Response",res);
                 })
             }
             return {

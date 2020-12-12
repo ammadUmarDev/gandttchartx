@@ -108,7 +108,7 @@ const Note = ({details}) => {
   }
 
   return (
-    <Draggable handle=".handle"><div  id={`draggable`}  onMouseDown={dragStart} onMouseMove={dragging} onMouseUp={drapEnd}  style={{left:  left, top: top,zIndex: note.zIndex,display: 'inline-block', padding: 0, marginLeft: 10, position: "absolute"}} onClick={() => {
+    <Draggable onMouseDown={dragStart} onMouseMove={dragging} onMouseUp={drapEnd}  handle=".handle"><div  id={`draggable`}   style={{left:  left, top: top,zIndex: note.zIndex,display: 'inline-block', padding: 0, marginLeft: 10, position: "absolute"}} onClick={() => {
           if(!note.isActive) {
               dispatch(noteClicked(details.id));
           }
@@ -238,7 +238,7 @@ const TODO = ({details}) => {
   }
 
   return (
-    <Draggable handle=".handle"><div id={`draggable`} onMouseDown={dragStart} onMouseMove={dragging} onMouseUp={drapEnd}  className="draggable"  style={{left: left, top: top, zIndex: note.zIndex,display: 'inline-block', padding: 0, marginLeft: 10, position: "absolute"}} onClick={() => {
+    <Draggable onMouseDown={dragStart} onMouseMove={dragging} onMouseUp={drapEnd} handle=".handle"><div id={`draggable`}   className="draggable"  style={{left: left, top: top, zIndex: note.zIndex,display: 'inline-block', padding: 0, marginLeft: 10, position: "absolute"}} onClick={() => {
       if(!note.isActive) {
           dispatch(noteClicked(details.id));
       }
@@ -340,7 +340,7 @@ const Image = ({details}) => {
     setOutline("3px solid rgba(255,255,255,0.0)")
   }
   return (
-    <Draggable handle=".handle"><div id={`draggable`} onMouseDown={dragStart} onMouseMove={dragging} onMouseUp={drapEnd} className="draggable imgaer"  style={{top: top, left: left, zIndex: note.zIndex,display: 'inline-block', padding: 0, marginLeft: 10, position: "absolute"}} onClick={() => {
+    <Draggable onMouseDown={dragStart} onMouseMove={dragging} onMouseUp={drapEnd} handle=".handle"><div id={`draggable`}  className="draggable imgaer"  style={{top: top, left: left, zIndex: note.zIndex,display: 'inline-block', padding: 0, marginLeft: 10, position: "absolute"}} onClick={() => {
       if(!note.isActive) {
           dispatch(noteClicked(details.id));
       }
