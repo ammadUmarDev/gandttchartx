@@ -37,6 +37,7 @@ const notely = () => {
   const position = useSelector(redux => redux.position);
   const positionY = useSelector(redux => redux.positionY);
   const [background, setBackground] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     dispatch(saveDetails())
@@ -82,9 +83,11 @@ const notely = () => {
       </div>
       :
       <div style={{display: "flex", flexDirection: "row", alignItems: "center"}}>
-        <button onClick={() => {
-           dispatch(saveDetails());
-        }} className="btn btn-primary" style={{marginRight: 20}}>Save</button>
+        <button onClick={async () => {
+          setLoading(true)
+           await dispatch(saveDetails());
+           setLoading(false);
+        }} className="btn btn-primary" style={{marginRight: 20}}>{loading ? "Saving..." : "Save"}</button>
         <a style={{color: "#fff",fontWeight: "normal",marginRight: 20}}>{credentials.name}</a>
         <i onClick={e => setSettings(state => !state)} style={{marginLeft: 20, marginRight: 20, fontSize: 25, color: "#fff"}} class="fa fa-cog" aria-hidden="true"></i>
       </div>
