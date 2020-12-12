@@ -93,8 +93,8 @@ const Note = ({details}) => {
     });
 
     setDim({
-      x: e.pageX,
-      y: e.pageY
+      x: e.currentTarget.offsetLeft,
+      y: e.currentTarget.offsetTop
     })
     
   }
