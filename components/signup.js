@@ -14,10 +14,7 @@ const signup = ({setSignupModal}) => {
 
 
     const handleSignup = (type) => {
-        if(email == "" || password == "" || name == "") {
-            alert("Please fill the required fields!");
-            return;
-        }
+        
         setLoading(true)
         firebase.auth().createUserWithEmailAndPassword(email,password).then((res) => {
             firebase.database().ref("users").child(res.user.uid).set({
