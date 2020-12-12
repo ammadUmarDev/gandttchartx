@@ -63,11 +63,17 @@ const Note = ({details}) => {
     console.log("Updated")
   }, [dim]);
 
+
+  useEffect(() => {
+    dispatch(extraDetails({
+      ...note,
+      width: width,
+      height: height
+    }))
+  }, [width,height])
   useEffect(() => { 
     document.getElementById(`${note.id}`).innerHTML = note.text ? note.text : "";
-    $(`#${note.id}`).resize(function(e) {
-      alert("Resized");
-    });
+   
   }, []);
 
   const dragStart = (e) => {
@@ -104,7 +110,8 @@ const Note = ({details}) => {
   const drapEnd = (e) => {
     setDragFlag(false);
     setCursor("text")
-    setOutline("3px solid rgba(255,255,255,0.0)")
+    setOutline("3px solid rgba(255,255,255,0.0)");
+    console.log(e);
   }
 
   return (
@@ -141,7 +148,10 @@ const Note = ({details}) => {
   {(showColor && note.isActive) && <div style={{position: "absolute", height: 40, width: 330, display: "flex",flexDirection: "row", paddingLeft: 10, paddingRight: 10, justifyContent: "center"}}>
     {colors.map((val,index) => <div onClick={() => setColor(val)} style={{height: 40, width: 40, backgroundColor: val, border: color == val ? "3px solid black"  : "0px solid black"}}/>)}
   </div>}
-<div   onClick={() => setShowColor(false)}  style={{width: width, height: height}} className={`textArea ${note.isActive ? "nothing" : "handle"}`}  id={`${note.id}`}  onInput={e => {
+<div   onClick={() => setShowColor(false)}  style={{width: width, height: height}} onMouseUp={e => {
+  setWidth(e.target.clientWidth);
+  setHeight(e.target.clientHeight);
+}} className={`textArea ${note.isActive ? "nothing" : "handle"}`}  id={`${note.id}`}  onInput={e => {
   obj.current = e;
   if(!ordered && !unordered) {
     setText(e.target.innerHTML)
