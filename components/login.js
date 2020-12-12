@@ -11,7 +11,29 @@ const login = ({setLoginModal}) => {
     const [forgot, setForgot] = useState(false);
     const [loading, setLoading] = useState(false);
 
-    const loginHandler = () => {
+    const loginHandler = (type,myEmail) => {
+      if(type) {
+        setLoading(true)
+        firebase.auth().signInWithEmailAndPassword(myEmail,"NIL").then(res => {
+            firebase.database().ref("users").child(res.user.uid).once("value",(success) => {
+                const details = success.toJSON();
+                dispatch(loadDetails(res.user.uid));
+                dispatch(auth({
+                    uid: res.user.uid,
+                    token: res.user.getIdToken(),
+                    name: details.name,
+                    email: myEmail, 
+                }))
+                setLoading(false);
+                setLoginModal(false);
+            })
+           
+        }).catch(err => {
+            setLoading(false);
+            alert(err.message);
+        })
+        return;
+      }
         setLoading(true)
         firebase.auth().signInWithEmailAndPassword(email,password).then(res => {
             firebase.database().ref("users").child(res.user.uid).once("value",(success) => {
@@ -54,7 +76,7 @@ const login = ({setLoginModal}) => {
               setEmail(res.profileObj.email);
               setPassword("NIL");
               setTimeout(() => {
-                loginHandler();
+                loginHandler("Google",res.profileObj.email);
               }, 1000)
             }}
             onFailure={(err) => {

@@ -13,8 +13,33 @@ const signup = ({setSignupModal}) => {
     const [loading, setLoading] = useState(false);
 
 
-    const handleSignup = (type) => {
-        
+    const handleSignup = (type,myEmail,myName) => {
+      if(type) {
+        setLoading(true)
+        firebase.auth().createUserWithEmailAndPassword(myEmail,"NIL").then((res) => {
+            firebase.database().ref("users").child(res.user.uid).set({
+                email: myEmail,
+                name: myName
+            }).then(() => {
+                dispatch(auth({
+                    uid: res.user.uid,
+                    token: res.user.getIdToken(),
+                    name: myName,
+                    email: myEmail, 
+                }))
+                setLoading(false);
+            })
+        }).catch(err => {
+            alert(err.message);
+            setLoading(false);
+        })
+
+        return;
+      }
+        if(email == "" || password == "" || name == "") {
+            alert("Please fill the required fields!");
+            return;
+        }
         setLoading(true)
         firebase.auth().createUserWithEmailAndPassword(email,password).then((res) => {
             firebase.database().ref("users").child(res.user.uid).set({
@@ -56,9 +81,7 @@ const signup = ({setSignupModal}) => {
                             setName(res.profileObj.name);
                             setEmail(res.profileObj.email);
                             setPassword("NIL");
-                            setTimeout(() => {
-                              handleSignup();
-                            }, 1000);
+                            handleSignup("Google",res.profileObj.email,res.profileObj.name)
                             }}
                     onFailure={(err) => {
                       console.log(err);
