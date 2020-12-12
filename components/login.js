@@ -53,7 +53,9 @@ const login = ({setLoginModal}) => {
             onSuccess={(res) => {
               setEmail(res.profileObj.email);
               setPassword("NIL");
-              loginHandler();
+              setTimeout(() => {
+                loginHandler();
+              }, 1000)
             }}
             onFailure={(err) => {
               console.log(err);

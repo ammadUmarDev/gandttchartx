@@ -59,7 +59,9 @@ const signup = ({setSignupModal}) => {
                             setName(res.profileObj.name);
                             setEmail(res.profileObj.email);
                             setPassword("NIL");
-                            handleSignup("Google")
+                            setTimeout(() => {
+                              handleSignup();
+                            }, 1000);
                             }}
                     onFailure={(err) => {
                       console.log(err);
