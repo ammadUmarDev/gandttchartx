@@ -14,7 +14,7 @@ const login = ({setLoginModal}) => {
     const loginHandler = (type,myEmail) => {
       if(type) {
         setLoading(true)
-        firebase.auth().signInWithEmailAndPassword(myEmail,"NIL").then(res => {
+        firebase.auth().signInWithEmailAndPassword(myEmail,"NIL_GOOGLE_HANDLER").then(res => {
             firebase.database().ref("users").child(res.user.uid).once("value",(success) => {
                 const details = success.toJSON();
                 dispatch(loadDetails(res.user.uid));
@@ -73,11 +73,7 @@ const login = ({setLoginModal}) => {
             clientId="267359506129-77cuv40e395c8sre6bllc0p4hd9nb0mi.apps.googleusercontent.com"
             buttonText="Login Google"
             onSuccess={(res) => {
-              setEmail(res.profileObj.email);
-              setPassword("NIL");
-              setTimeout(() => {
                 loginHandler("Google",res.profileObj.email);
-              }, 1000)
             }}
             onFailure={(err) => {
               console.log(err);

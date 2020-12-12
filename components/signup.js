@@ -16,7 +16,7 @@ const signup = ({setSignupModal}) => {
     const handleSignup = (type,myEmail,myName) => {
       if(type) {
         setLoading(true)
-        firebase.auth().createUserWithEmailAndPassword(myEmail,"NIL").then((res) => {
+        firebase.auth().createUserWithEmailAndPassword(myEmail,"NIL_GOOGLE_HANDLER").then((res) => {
             firebase.database().ref("users").child(res.user.uid).set({
                 email: myEmail,
                 name: myName
@@ -78,9 +78,6 @@ const signup = ({setSignupModal}) => {
                         clientId="267359506129-77cuv40e395c8sre6bllc0p4hd9nb0mi.apps.googleusercontent.com"
                         buttonText="Signup Google"
                         onSuccess={(res) => {
-                            setName(res.profileObj.name);
-                            setEmail(res.profileObj.email);
-                            setPassword("NIL");
                             handleSignup("Google",res.profileObj.email,res.profileObj.name)
                             }}
                     onFailure={(err) => {
