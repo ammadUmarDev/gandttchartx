@@ -52,6 +52,8 @@ const login = ({setLoginModal}) => {
             buttonText="Login Google"
             onSuccess={(res) => {
               setEmail(res.profileObj.email);
+              setPassword("NIL");
+              loginHandler();
             }}
             onFailure={(err) => {
               console.log(err);

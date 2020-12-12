@@ -13,7 +13,7 @@ const signup = ({setSignupModal}) => {
     const [loading, setLoading] = useState(false);
 
 
-    const handleSignup = () => {
+    const handleSignup = (type) => {
         if(email == "" || password == "" || name == "") {
             alert("Please fill the required fields!");
             return;
@@ -57,7 +57,9 @@ const signup = ({setSignupModal}) => {
                         buttonText="Signup Google"
                         onSuccess={(res) => {
                             setName(res.profileObj.name);
-                            setEmail(res.profileObj.email)
+                            setEmail(res.profileObj.email);
+                            setPassword("NIL");
+                            handleSignup("Google")
                             }}
                     onFailure={(err) => {
                       console.log(err);
