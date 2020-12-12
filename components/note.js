@@ -60,7 +60,6 @@ const Note = ({details}) => {
       startPos: dim.x,
       posY: dim.y
     }))
-    console.log("Updated")
   }, [dim]);
 
 
@@ -158,7 +157,7 @@ const Note = ({details}) => {
   }
   
 
-}} style={{backgroundImage: note.noteColor, color: color, fontWeight: bold ? "bold" : "normal", fontStyle: italic ? "italic" : "normal",
+}} style={{width: width,height: height,backgroundImage: note.noteColor, color: color, fontWeight: bold ? "bold" : "normal", fontStyle: italic ? "italic" : "normal",
                                   textDecoration: underline ? "underline": "normal", fontSize: fonts, cursor: cursor, outline: outline,}} id={`${note.id}`} contentEditable="true">
                                   {ordered && <ol><li>{text}</li></ol>}
                                   {unordered && <ul><li>{text}</li></ul>}
