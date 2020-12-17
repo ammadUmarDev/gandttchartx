@@ -84,7 +84,7 @@ const Note = ({details}) => {
           setDragFlag(false);
         } else {
           setDragFlag(true);
-          setCursor("crosshair");
+          setCursor("grab");
           setOutline("3px solid rgba(255,255,255,0.4)")
         }
     setDiff({
@@ -217,7 +217,7 @@ const TODO = ({details}) => {
           setDragFlag(false);
         } else {
           setDragFlag(true);
-          setCursor("crosshair");
+          setCursor("grab");
           setOutline("3px solid rgba(255,255,255,0.4)")
         }
       setDiff({
@@ -320,7 +320,7 @@ const Image = ({details}) => {
           setDragFlag(false);
         } else {
           setDragFlag(true);
-          setCursor("crosshair");
+          setCursor("grab");
           setOutline("3px solid rgba(255,255,255,0.4)")
         }
     setDiff({

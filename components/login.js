@@ -12,7 +12,7 @@ const login = ({setLoginModal}) => {
     const [loading, setLoading] = useState(false);
 
     const loginHandler = (type,myEmail) => {
-      if(type) {
+      if(type == "Google") {
         setLoading(true)
         firebase.auth().signInWithEmailAndPassword(myEmail,"NIL_GOOGLE_HANDLER").then(res => {
             firebase.database().ref("users").child(res.user.uid).once("value",(success) => {
