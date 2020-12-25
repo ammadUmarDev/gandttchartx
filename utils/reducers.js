@@ -57,15 +57,17 @@ const reducer = (state = initialState, action) => {
                 ...state,
             }
         case "CHANGE_COLOR":
-            for(let i=0; i<state.notes.length; i++) {
-                if(state.notes[i].isActive) {
-                    state.notes[i].noteColor = action.payload;
+            const temp_notes = [...state.notes];
+            for(let i=0; i<temp_notes.length; i++) {
+                if(temp_notes[i].isActive) {
+                    temp_notes[i].noteColor = action.payload;
                     break;
                 }
             }
             return {
                 ...state,
-                color: action.payload
+                color: action.payload,
+                notes: temp_notes,
             }
         case "AUTH":
             return {
