@@ -110,7 +110,13 @@ const login = ({setLoginModal}) => {
               <input value={email} onChange={e => setEmail(e.target.value)} type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="yourid@example.com" />
                </div>
 
-               <button className="btn btn-info">Get Password</button>
+               <button onClick={e => {
+                 firebase.auth().sendPasswordResetEmail(email).then(res => {
+                   alert(JSON.stringify(res));
+                 }).catch(err => {
+                   alert(JSON.stringify(err));
+                 })
+               }} className="btn btn-info">Get Password</button>
                </div>}
             </div>
           </div>

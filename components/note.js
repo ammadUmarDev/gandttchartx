@@ -85,7 +85,6 @@ const Note = ({details}) => {
         } else {
           setDragFlag(true);
           setCursor("grab");
-          setOutline("3px solid rgba(255,255,255,0.4)")
         }
     setDiff({
       x: e.pageX - e.currentTarget.offsetLeft,
@@ -218,7 +217,6 @@ const TODO = ({details}) => {
         } else {
           setDragFlag(true);
           setCursor("grab");
-          setOutline("3px solid rgba(255,255,255,0.4)")
         }
       setDiff({
         x: e.screenX - e.currentTarget.getBoundingClientRect().left,
